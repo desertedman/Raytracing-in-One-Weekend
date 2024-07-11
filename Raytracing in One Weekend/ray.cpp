@@ -17,6 +17,7 @@ const vec3& ray::getDirection() const {
 	return (*this).direction;
 }
 
-point3 ray::at(double t) const {
-	return (*this).origin + t * (*this).direction;
+
+point3 ray::getPosition(double t) const {
+	return (*this).getOrigin() + t * (*this).getDirection();
 }

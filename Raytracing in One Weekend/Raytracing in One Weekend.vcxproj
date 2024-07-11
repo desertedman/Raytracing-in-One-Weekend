@@ -129,9 +129,7 @@
   <ItemGroup>
     <ClCompile Include="color.cpp" />
     <ClCompile Include="ray.cpp" />
-    <ClCompile Include="Raytracing in One Weekend.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="Raytracing in One Weekend.cpp" />
     <ClCompile Include="Test.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>

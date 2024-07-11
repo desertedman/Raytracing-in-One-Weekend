@@ -8,7 +8,9 @@ using namespace std;
 
 
 color ray_color(const ray& r) {
-	return color(0, 0, 0);
+	vec3 unit_direction = unit_vector(r.getDirection());
+	auto a = 0.5 * (unit_direction.getY() + 1.0);
+	return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
 }
 
 
@@ -58,11 +60,11 @@ int main() {
 	//inFS.open(fileName);
 
 	//File Output
-	
+
 	outFS.open(fileName);
 	if (!outFS.good()) {
 		cout << "Error! File could not be written";
-		exit;
+		exit(1);
 	}
 
 
@@ -95,15 +97,13 @@ int main() {
 			auto ray_direction = pixel_center - camera_center;
 			ray r(camera_center, ray_direction);
 
-			color pixel_color = ray_color(r);
+			auto pixel_color = ray_color(r);
 			write_color(outFS, pixel_color);
 		}
 
 	}
 
 	outFS.close();
-
 	clog << "\r...Complete!                 " << endl;
-
 	return 0;
-} 
+}
