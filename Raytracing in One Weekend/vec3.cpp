@@ -69,46 +69,46 @@ double vec3::getLengthSquared() const {
 
 //Vector Utility Functions
 
-std::ostream& operator<<(std::ostream& out, const vec3& vector) {
+inline std::ostream& operator<<(std::ostream& out, const vec3& vector) {
 	return out << vector.getX() << ' ' << vector.getY() << ' ' << vector.getZ();
 }
 
-vec3 operator+(const vec3& lhs, const vec3& rhs) {
+inline vec3 operator+(const vec3& lhs, const vec3& rhs) {
 	return vec3(lhs.getX() + rhs.getX(), lhs.getY() + rhs.getY(), lhs.getZ() + rhs.getZ());
 }
 
-vec3 operator-(const vec3& lhs, const vec3& rhs) {
+inline vec3 operator-(const vec3& lhs, const vec3& rhs) {
 	return vec3(lhs.getX() - rhs.getX(), lhs.getY() - rhs.getY(), lhs.getZ() - rhs.getZ());
 }
 
-vec3 operator*(const vec3& lhs, const vec3& rhs) {
+inline vec3 operator*(const vec3& lhs, const vec3& rhs) {
 	return vec3(lhs.getX() * rhs.getX(), lhs.getY() * rhs.getY(), lhs.getZ() * rhs.getZ());
 }
 
-vec3 operator*(double lhs, const vec3& rhs) {
+inline vec3 operator*(double lhs, const vec3& rhs) {
 	return vec3(lhs * rhs.getX(), lhs * rhs.getY(), lhs * rhs.getZ());
 }
 
-vec3 operator*(const vec3& lhs, double rhs) {
+inline vec3 operator*(const vec3& lhs, double rhs) {
 	return rhs * lhs;
 }
 
-vec3 operator/(const vec3& lhs, double rhs) {
+inline vec3 operator/(const vec3& lhs, double rhs) {
 	return lhs * (1 / rhs);
 }
 
-double dot(const vec3& lhs, const vec3& rhs) {
+inline double dot(const vec3& lhs, const vec3& rhs) {
 	return lhs.getX() * rhs.getX()
 		+ lhs.getY() * rhs.getY()
 		+ lhs.getZ() * rhs.getZ();
 }
 
-vec3 cross(const vec3& lhs, const vec3& rhs) {
+inline vec3 cross(const vec3& lhs, const vec3& rhs) {
 	return vec3(lhs.getY() * rhs.getZ() - lhs.getZ() * rhs.getY(),
 		lhs.getZ() * rhs.getX() - lhs.getX() * rhs.getZ(),
 		lhs.getX() * rhs.getY() - lhs.getY() * rhs.getX());
 }
 
-vec3 unit_vector(const vec3& vector) {
+inline vec3 unit_vector(const vec3& vector) {
 	return vector / vector.getLength();
 }

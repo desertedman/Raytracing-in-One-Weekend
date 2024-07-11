@@ -17,8 +17,8 @@ public:
 
 	vec3 operator-() const;		//not sure what this function is; maybe to negate the vector?
 	double operator[](int i) const;
-	//double& operator[](int i) const;	i dont fucking know why my implementation doesnt work
-	//double operator[](int i) const { return xyz[i]; }
+	//double& operator[](int i) const;	
+	// i dont know why this doesnt work if i seperate the function definition from declaration
 	double& operator[](int i) { return xyz[i]; }
 
 	vec3& operator+=(const vec3& rhs);
