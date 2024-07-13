@@ -4,55 +4,56 @@
 #include <iostream>
 
 
-class vec3 {
+class Vec3 {
 public:
-	double xyz[3];
-
-	vec3();
-	vec3(double x, double y, double z);
+	Vec3();
+	Vec3(double x, double y, double z);
 
 	double getX() const;
 	double getY() const;
 	double getZ() const;
 
-	vec3 operator-() const;		//not sure what this function is; maybe to negate the vector?
+	Vec3 operator-() const;
 	double operator[](int i) const;
 	//double& operator[](int i) const;	
 	// i dont know why this doesnt work if i seperate the function definition from declaration
-	double& operator[](int i) { return xyz[i]; }
+	double& operator[](int i) { return m_xyz[i]; }
 
-	vec3& operator+=(const vec3& rhs);
-	vec3& operator*=(double t);
-	vec3& operator/=(double t);
+	Vec3& operator+=(const Vec3& rhs);
+	Vec3& operator*=(double t);
+	Vec3& operator/=(double t);
 
 	double getLength() const;
 	double getLengthSquared() const;
+
+private:
+	double m_xyz[3];
 };
 
 
-using point3 = vec3;
+using Point3 = Vec3;
 
 
 //Vector Utility Functions
 
-std::ostream& operator<<(std::ostream& out, const vec3& v);
+std::ostream& operator<<(std::ostream& out, const Vec3& v);
 
-vec3 operator+(const vec3& lhs, const vec3& rhs);
+Vec3 operator+(const Vec3& lhs, const Vec3& rhs);
 
-vec3 operator-(const vec3& lhs, const vec3& rhs);
+Vec3 operator-(const Vec3& lhs, const Vec3& rhs);
 
-vec3 operator*(const vec3& lhs, const vec3& rhs);
+Vec3 operator*(const Vec3& lhs, const Vec3& rhs);
 
-vec3 operator*(double lhs, const vec3& rhs);
+Vec3 operator*(double lhs, const Vec3& rhs);
 
-vec3 operator*(const vec3& lhs, double rhs);
+Vec3 operator*(const Vec3& lhs, double rhs);
 
-vec3 operator/(const vec3& lhs, double rhs);
+Vec3 operator/(const Vec3& lhs, double rhs);
 
-double dot(const vec3& lhs, const vec3& rhs);
+double dot(const Vec3& lhs, const Vec3& rhs);
 
-vec3 cross(const vec3& lhs, const vec3& rhs);
+Vec3 cross(const Vec3& lhs, const Vec3& rhs);
 
-vec3 unit_vector(const vec3& vector);
+Vec3 unitVector(const Vec3& vector);
 
 #endif

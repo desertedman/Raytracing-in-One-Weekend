@@ -4,19 +4,19 @@
 #include "vec3.h"
 
 
-class ray {
+class Ray {
 public:
-	ray();
-	ray(const point3& origin, const vec3& direction);
+	Ray();
+	Ray(const Point3& origin, const Vec3& direction);
 
-	const point3& getOrigin() const;
-	const vec3& getDirection() const;
+	const Point3& getOrigin() const;
+	const Vec3& getDirection() const;
 
-	point3 getPosition(double t) const;
+	Point3 getPosition(double t) const;
 
 private:
-	point3 origin;
-	vec3 direction;
+	Point3 m_origin;
+	Vec3 m_direction;
 };
 
 #endif

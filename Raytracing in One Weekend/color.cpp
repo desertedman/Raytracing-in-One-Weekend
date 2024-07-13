@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void write_color(std::ostream& out, const color& pixel_color) {
+void writeColor(std::ostream& out, const Color& pixel_color) {
 	auto r = pixel_color.getX();
 	auto g = pixel_color.getY();
 	auto b = pixel_color.getZ();

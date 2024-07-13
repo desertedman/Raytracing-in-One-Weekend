@@ -7,21 +7,37 @@
 using namespace std;
 
 
-color ray_color(const ray& r) {
-	vec3 unit_direction = unit_vector(r.getDirection());
-	auto a = 0.5 * (unit_direction.getY() + 1.0);
-	return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
+bool hitSphere(const Point3& center, double radius, const Ray& r) {
+	Vec3 raycast = center - r.getOrigin();
+	auto a = dot(r.getDirection(), r.getDirection());
+	auto b = dot(-2 * r.getDirection(), raycast);
+	auto c = dot(raycast, raycast) - radius * radius;
+	auto discriminant = b * b - 4 * a * c;
+	return (discriminant >= 0);
+}
+
+
+Color rayColor(const Ray& r) {
+	if (hitSphere(Point3(0, 0, -1), 0.5, r)) {
+		return Color(1, 0, 0);
+	}
+
+	else {
+		Vec3 unit_direction = unitVector(r.getDirection());
+		auto a = 0.5 * (unit_direction.getY() + 1.0);
+		return (1.0 - a) * Color(1.0, 1.0, 1.0) + a * Color(0.5, 0.7, 1.0);
+	}
 }
 
 
 int main() {
 
 	//ifstream inFS;
-	ofstream outFS;
-	string fileName = "output.ppm";
+	ofstream out_fs;
+	string file_name = "output.ppm";
 
 	//Image
-
+	//400 x 225 
 	auto aspect_ratio = 16.0 / 9.0;
 	int image_width = 400;
 
@@ -34,15 +50,16 @@ int main() {
 
 
 	//Camera
+	//3.5 x 2
 	auto focal_length = 1.0;
 	auto viewport_height = 2.0;
 	auto viewport_width = viewport_height * (double(image_width) / image_height);
-	auto camera_center = point3(0, 0, 0);
+	auto camera_center = Point3(0, 0, 0);
 
 
 	//Calculate the vectors across the horizontal and down the vertical viewport edges.
-	auto viewport_horizontal = vec3(viewport_width, 0, 0);
-	auto viewport_vertical = vec3(0, -viewport_height, 0);
+	auto viewport_horizontal = Vec3(viewport_width, 0, 0);
+	auto viewport_vertical = Vec3(0, -viewport_height, 0);
 
 
 	//Calculate the horizontal and vertical delta vectors from pixel to pixel.
@@ -52,17 +69,17 @@ int main() {
 
 	//Calculate the location of the upper left pixel.
 	auto viewport_upper_left = camera_center
-		- vec3(0, 0, focal_length) - viewport_horizontal / 2 - viewport_vertical / 2;
+		- Vec3(0, 0, focal_length) - viewport_horizontal / 2 - viewport_vertical / 2;
 	auto pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_horizontal + pixel_delta_vertical);
 
 
 	//Check if file already exists; not implemented
-	//inFS.open(fileName);
+	//inFS.open(file_name);
 
 	//File Output
 
-	outFS.open(fileName);
-	if (!outFS.good()) {
+	out_fs.open(file_name);
+	if (!out_fs.good()) {
 		cout << "Error! File could not be written";
 		exit(1);
 	}
@@ -72,7 +89,7 @@ int main() {
 
 	cout << "Rendering..." << endl;
 
-	outFS << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+	out_fs << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
 	for (int j = 0; j < image_height; j++) {
 
@@ -90,20 +107,20 @@ int main() {
 			int ig = int(255.999 * g);
 			int ib = int(255.999 * b);
 
-			outFS << ir << ' ' << ig << ' ' << ib << endl;
+			out_fs << ir << ' ' << ig << ' ' << ib << endl;
 			*/
 
 			auto pixel_center = pixel00_loc + (i * pixel_delta_horizontal) + (j * pixel_delta_vertical);
 			auto ray_direction = pixel_center - camera_center;
-			ray r(camera_center, ray_direction);
+			Ray camera_ray(camera_center, ray_direction);
 
-			auto pixel_color = ray_color(r);
-			write_color(outFS, pixel_color);
+			Color pixel_color = rayColor(camera_ray);
+			writeColor(out_fs, pixel_color);
 		}
 
 	}
 
-	outFS.close();
+	out_fs.close();
 	clog << "\r...Complete!                 " << endl;
 	return 0;
 }

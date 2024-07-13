@@ -1,23 +1,22 @@
 #include "ray.h"
 
-ray::ray() {
+Ray::Ray() {
 	//nothing
 }
 
-ray::ray(const point3& origin, const vec3& direction) {
-	(*this).origin = origin;
-	(*this).direction = direction;
+Ray::Ray(const Point3& origin, const Vec3& direction) {
+	(*this).m_origin = origin;
+	(*this).m_direction = direction;
 }
 
-const point3& ray::getOrigin() const {
-	return (*this).origin;
+const Point3& Ray::getOrigin() const {
+	return (*this).m_origin;
 }
 
-const vec3& ray::getDirection() const {
-	return (*this).direction;
+const Vec3& Ray::getDirection() const {
+	return (*this).m_direction;
 }
 
-
-point3 ray::getPosition(double t) const {
+Point3 Ray::getPosition(double t) const {
 	return (*this).getOrigin() + t * (*this).getDirection();
 }

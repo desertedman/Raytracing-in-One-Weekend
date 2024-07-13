@@ -4,8 +4,8 @@
 #include "vec3.h"
 
 //Takes color inputs from [0, 1] range.
-using color = vec3;
+using Color = Vec3;
 
-void write_color(std::ostream& out, const color& pixel_color);
+void writeColor(std::ostream& out, const Color& pixel_color);
 
 #endif
