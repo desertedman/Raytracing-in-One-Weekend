@@ -9,24 +9,34 @@ using namespace std;
 
 double hitSphere(const Point3& center, double radius, const Ray& current_ray) {
 	Vec3 raycast = center - current_ray.getOrigin();
-	double a = dot(current_ray.getDirection(), current_ray.getDirection());
+	/*double a = dot(current_ray.getDirection(), current_ray.getDirection());
 	double b = dot(-2 * current_ray.getDirection(), raycast);
 	double c = dot(raycast, raycast) - radius * radius;
-	double discriminant = b * b - 4 * a * c;
+	double discriminant = b * b - 4 * a * c;*/
+
+	double a = current_ray.getDirection().getLengthSquared();
+	double h = dot(current_ray.getDirection(), raycast);
+	double c = raycast.getLengthSquared() - radius * radius;
+	double discriminant = h*h - a * c;
 
 	if (discriminant < 0) {
 		return -1.0;
 	}
 
 	else {
-		return (-b - sqrt(discriminant)) / (2.0 * a);
+		//return (-b - sqrt(discriminant)) / (2.0 * a);
+		return (h - sqrt(discriminant)) / a;
 	}
 }
 
 
 Color rayColor(const Ray& camera_ray) {
+
+	//P(t) = Q + tD
+	//t is not exactly the point of intersection, but it is useful for intuition purposes
 	double t = hitSphere(Point3(0, 0, -1), 0.5, camera_ray);
 	if (t > 0.0) {
+		//Normal vector = unit vector of (Point of intersection - center of sphere)
 		Vec3 normal = unitVector(camera_ray.getPosition(t) - Vec3(0, 0, -1));
 		return 0.5 * Color(normal.getX() + 1, normal.getY() + 1, normal.getZ() + 1);
 	}
