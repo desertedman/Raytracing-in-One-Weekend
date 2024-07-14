@@ -33,11 +33,11 @@ double hitSphere(const Point3& center, double radius, const Ray& current_ray) {
 Color rayColor(const Ray& camera_ray) {
 
 	//P(t) = Q + tD
-	//t is not exactly the point of intersection, but it is useful for intuition purposes
-	double t = hitSphere(Point3(0, 0, -1), 0.5, camera_ray);
-	if (t > 0.0) {
+	//t is not exactly the point of intersection, but it is useful to call it as such for intuition purposes
+	double intersection = hitSphere(Point3(0, 0, -1), 0.5, camera_ray);
+	if (intersection > 0.0) {
 		//Normal vector = unit vector of (Point of intersection - center of sphere)
-		Vec3 normal = unitVector(camera_ray.getPosition(t) - Vec3(0, 0, -1));
+		Vec3 normal = unitVector(camera_ray.getPosition(intersection) - Vec3(0, 0, -1));
 		return 0.5 * Color(normal.getX() + 1, normal.getY() + 1, normal.getZ() + 1);
 	}
 

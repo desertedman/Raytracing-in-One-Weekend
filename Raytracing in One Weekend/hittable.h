@@ -5,13 +5,13 @@
 
 class HitRecord {
 public: 
-	Point3 getCurrPoint();
+	/*Point3 getCurrPoint();
 	Vec3 getNormal();
 	double getParameterT();
 
 	void setCurrPoint(Point3& new_point);
 	void setNormal(Vec3& new_normal);
-	void setNewParameterT(double new_parameter_t);
+	void setNewParameterT(double new_parameter_t);*/
 
 	Point3 m_curr_point;
 	Vec3 m_normal;

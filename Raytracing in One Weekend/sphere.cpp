@@ -23,16 +23,16 @@ bool Sphere::hit(const Ray& curr_ray, double ray_tmin, double ray_tmax, HitRecor
 
 	if (root <= ray_tmin || ray_tmax <= root) {
 		root = (h + sqrt_discriminant) / a;
-		
+
 		if (root <= ray_tmin || ray_tmax <= root) {
 			return false;
 		}
 	}
 
-	rec.setNewParameterT(root);
-	rec.m_curr_point = curr_ray.getPosition(rec.getParameterT());
+	rec.m_parameter_t = root;
+	rec.m_curr_point = curr_ray.getPosition(rec.m_parameter_t);
 	//rec.setCurrPoint(curr_ray.getPosition(rec.getParameterT()));
-	rec.m_normal = (rec.getCurrPoint() - center) / radius;
+	rec.m_normal = (rec.m_curr_point - center) / radius;
 
 	return true;
 }
