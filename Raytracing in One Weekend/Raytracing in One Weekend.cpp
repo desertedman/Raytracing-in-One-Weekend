@@ -7,26 +7,33 @@
 using namespace std;
 
 
-bool hitSphere(const Point3& center, double radius, const Ray& r) {
-	Vec3 raycast = center - r.getOrigin();
-	auto a = dot(r.getDirection(), r.getDirection());
-	auto b = dot(-2 * r.getDirection(), raycast);
+double hitSphere(const Point3& center, double radius, const Ray& current_ray) {
+	Vec3 raycast = center - current_ray.getOrigin();
+	auto a = dot(current_ray.getDirection(), current_ray.getDirection());
+	auto b = dot(-2 * current_ray.getDirection(), raycast);
 	auto c = dot(raycast, raycast) - radius * radius;
 	auto discriminant = b * b - 4 * a * c;
-	return (discriminant >= 0);
-}
 
-
-Color rayColor(const Ray& r) {
-	if (hitSphere(Point3(0, 0, -1), 0.5, r)) {
-		return Color(1, 0, 0);
+	if (discriminant < 0) {
+		return -1.0;
 	}
 
 	else {
-		Vec3 unit_direction = unitVector(r.getDirection());
-		auto a = 0.5 * (unit_direction.getY() + 1.0);
-		return (1.0 - a) * Color(1.0, 1.0, 1.0) + a * Color(0.5, 0.7, 1.0);
+		return (-b - sqrt(discriminant)) / (2.0 * a);
 	}
+}
+
+
+Color rayColor(const Ray& camera_ray) {
+	auto t = hitSphere(Point3(0, 0, -1), 0.5, camera_ray);
+	if (t > 0.0) {
+		Vec3 normal = unitVector(camera_ray.getPosition(t) - Vec3(0, 0, -1));
+		return 0.5 * Color(normal.getX() + 1, normal.getY() + 1, normal.getZ() + 1);
+	}
+
+	Vec3 unit_direction = unitVector(camera_ray.getDirection());
+	auto a = 0.5 * (unit_direction.getY() + 1.0);
+	return (1.0 - a) * Color(1.0, 1.0, 1.0) + a * Color(0.5, 0.7, 1.0);
 }
 
 
