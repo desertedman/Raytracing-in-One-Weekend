@@ -1,15 +1,15 @@
 #include "sphere.h"
 
 Sphere::Sphere(const Point3& center, double radius) {
-	(*this).center = center;
-	(*this).radius = fmax(0, radius);
+	(*this).m_center = center;
+	(*this).m_radius = fmax(0, radius);
 }
 
-bool Sphere::hit(const Ray& curr_ray, double ray_tmin, double ray_tmax, HitRecord& rec) const {
-	Vec3 raycast = (*this).center - curr_ray.getOrigin();
+bool Sphere::hit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const {
+	Vec3 raycast = (*this).m_center - curr_ray.getOrigin();
 	double a = curr_ray.getDirection().getLengthSquared();
 	double h = dot(curr_ray.getDirection(), raycast);
-	auto c = raycast.getLengthSquared() - radius * radius;
+	auto c = raycast.getLengthSquared() - m_radius * m_radius;
 
 	double discriminant = h * h - a * c;
 	if (discriminant < 0) {
@@ -29,10 +29,11 @@ bool Sphere::hit(const Ray& curr_ray, double ray_tmin, double ray_tmax, HitRecor
 		}
 	}
 
-	rec.m_parameter_t = root;
-	rec.m_curr_point = curr_ray.getPosition(rec.m_parameter_t);
-	//rec.setCurrPoint(curr_ray.getPosition(rec.getParameterT()));
-	rec.m_normal = (rec.m_curr_point - center) / radius;
+	record.m_parameter_t = root;
+	record.m_curr_point = curr_ray.getPosition(record.m_parameter_t);
+	Vec3 outward_normal = (record.m_curr_point - (*this).m_center) / (*this).m_radius;
+	record.setFaceNormal(curr_ray, outward_normal);
+	//record.m_normal = (record.m_curr_point - m_center) / m_radius;
 
 	return true;
 }

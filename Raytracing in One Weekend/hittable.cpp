@@ -23,3 +23,20 @@
 //void HitRecord::setNewParameterT(double new_parameter_t) {
 //	(*this).m_parameter_t = new_parameter_t;
 //}
+
+void HitRecord::setFaceNormal(const Ray& curr_ray, const Vec3& outward_normal) {
+	//Sets the hit record normal vector.
+	//Note: the parameter 'outward_normal' is assumed to have unit length.
+
+	if (dot(curr_ray.getDirection(), outward_normal) > 0.0) {
+		//ray is inside the sphere
+		(*this).m_normal = -outward_normal;
+		(*this).m_front_face = false;
+	}
+
+	else {
+		//ray is outside the sphere
+		(*this).m_normal = outward_normal;
+		(*this).m_front_face = true;
+	}
+}
