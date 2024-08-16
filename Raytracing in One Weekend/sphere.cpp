@@ -5,7 +5,7 @@ Sphere::Sphere(const Point3& center, double radius) {
 	(*this).m_radius = fmax(0, radius);
 }
 
-bool Sphere::hit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const {
+bool Sphere::isObjectHit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const {
 	Vec3 raycast = (*this).m_center - curr_ray.getOrigin();
 	double a = curr_ray.getDirection().getLengthSquared();
 	double h = dot(curr_ray.getDirection(), raycast);

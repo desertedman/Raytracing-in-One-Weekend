@@ -36,6 +36,9 @@
     <ClCompile Include="hittable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HittableList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vec3.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HittableList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

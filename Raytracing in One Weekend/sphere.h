@@ -8,7 +8,7 @@ class Sphere : public Hittable {
 public :
 	Sphere(const Point3& center, double radius);
 
-	bool hit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const override;
+	bool isObjectHit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const override;
 
 
 private:

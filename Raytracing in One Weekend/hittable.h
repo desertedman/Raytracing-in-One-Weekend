@@ -28,7 +28,7 @@ public:
 	virtual ~Hittable() = default;
 
 
-	virtual bool hit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const = 0;
+	virtual bool isObjectHit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const = 0;
 };
 
 #endif
