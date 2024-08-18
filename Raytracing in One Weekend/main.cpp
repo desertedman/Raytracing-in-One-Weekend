@@ -1,8 +1,11 @@
-#include <iostream>
+#include "rtweekend.h"
+#include "hittable.h"
+#include "hittablelist.h"
+#include "sphere.h"
+
+
 #include <fstream>
-#include "vec3.h"
-#include "color.h"
-#include "ray.h"
+
 
 using namespace std;
 

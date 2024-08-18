@@ -1,4 +1,4 @@
-#include "HittableList.h"
+#include "hittablelist.h"
 
 HittableList::HittableList() {
 

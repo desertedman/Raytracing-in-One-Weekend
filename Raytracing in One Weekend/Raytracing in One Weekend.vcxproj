@@ -128,21 +128,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="color.cpp" />
-    <ClCompile Include="HittableList.cpp" />
+    <ClCompile Include="hittablelist.cpp" />
     <ClCompile Include="ray.cpp" />
-    <ClCompile Include="Raytracing in One Weekend.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="hittable.cpp" />
     <ClCompile Include="sphere.cpp" />
-    <ClCompile Include="Test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="color.h" />
     <ClInclude Include="hittable.h" />
-    <ClInclude Include="HittableList.h" />
+    <ClInclude Include="hittablelist.h" />
     <ClInclude Include="ray.h" />
+    <ClInclude Include="rtweekend.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="vec3.h" />
   </ItemGroup>

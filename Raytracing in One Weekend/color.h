@@ -3,6 +3,9 @@
 
 #include "vec3.h"
 
+#include "iostream"
+
+
 //Takes color inputs from [0, 1] range.
 using Color = Vec3;
 
