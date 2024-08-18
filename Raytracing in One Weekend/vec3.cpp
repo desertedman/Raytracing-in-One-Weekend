@@ -1,7 +1,6 @@
 #include "vec3.h"
 #include <cmath>
 
-using namespace std;
 
 Vec3::Vec3() {
 	(*this).m_xyz[0] = 0;				//we cant set whole array equal to 0, 0, 0 directly so we have to access each individual element
@@ -60,7 +59,7 @@ Vec3& Vec3::operator/=(double t) {
 }
 
 double Vec3::getLength() const {
-	return sqrt((*this).getLengthSquared());
+	return std::sqrt((*this).getLengthSquared());
 }
 
 double Vec3::getLengthSquared() const {
