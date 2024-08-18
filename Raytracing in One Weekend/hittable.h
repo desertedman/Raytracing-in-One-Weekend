@@ -3,8 +3,10 @@
 
 #include "ray.h"
 
+//Records where exactly we hit on the object
 class HitRecord {
-public: 
+public:
+	//function list
 	/*Point3 getCurrPoint();
 	Vec3 getNormal();
 	double getParameterT();
@@ -15,12 +17,13 @@ public:
 
 	void setFaceNormal(const Ray& curr_ray, const Vec3& outward_normal);
 
+
+public:
+	//member list
 	Point3 m_curr_point;
 	Vec3 m_normal;
 	double m_parameter_t;
 	bool m_front_face;
-private:
-	
 };
 
 class Hittable {

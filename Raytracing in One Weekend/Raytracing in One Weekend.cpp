@@ -7,7 +7,7 @@
 using namespace std;
 
 
-double hitSphere(const Point3& center, double radius, const Ray& current_ray) {
+double isSphereHit(const Point3& center, double radius, const Ray& current_ray) {
 	Vec3 raycast = center - current_ray.getOrigin();
 	/*double a = dot(current_ray.getDirection(), current_ray.getDirection());
 	double b = dot(-2 * current_ray.getDirection(), raycast);
@@ -19,12 +19,14 @@ double hitSphere(const Point3& center, double radius, const Ray& current_ray) {
 	double c = raycast.getLengthSquared() - radius * radius;
 	double discriminant = h*h - a * c;
 
+	//No sphere intersection
 	if (discriminant < 0) {
 		return -1.0;
 	}
 
 	else {
 		//return (-b - sqrt(discriminant)) / (2.0 * a);
+		//Returns where exactly on the sphere we hit
 		return (h - sqrt(discriminant)) / a;
 	}
 }
@@ -34,10 +36,14 @@ Color rayColor(const Ray& camera_ray) {
 
 	//P(t) = Q + tD
 	//t is not exactly the point of intersection, but it is useful to call it as such for intuition purposes
-	double intersection = hitSphere(Point3(0, 0, -1), 0.5, camera_ray);
+	double intersection = isSphereHit(Point3(0, 0, -1), 0.5, camera_ray);
+
+	//Color the pixel according to the normal vector
 	if (intersection > 0.0) {
 		//Normal vector = unit vector of (Point of intersection - center of sphere)
 		Vec3 normal = unitVector(camera_ray.getPosition(intersection) - Vec3(0, 0, -1));
+
+		//Because rgb maps [from [0,1], we need to reframe the normalized vector range [-1,1] by multiplying by 0.5
 		return 0.5 * Color(normal.getX() + 1, normal.getY() + 1, normal.getZ() + 1);
 	}
 
@@ -90,11 +96,7 @@ int main() {
 	Vec3 pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_horizontal + pixel_delta_vertical);
 
 
-	//Check if file already exists; not implemented
-	//inFS.open(file_name);
-
 	//File Output
-
 	out_fs.open(file_name);
 	if (!out_fs.good()) {
 		cout << "Error! File could not be written";
@@ -105,8 +107,8 @@ int main() {
 	//Render
 
 	cout << "Rendering..." << endl;
-
 	out_fs << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+
 
 	for (int j = 0; j < image_height; j++) {
 
@@ -115,7 +117,7 @@ int main() {
 		for (int i = 0; i < image_width; i++) {
 
 			/*
-			//pixels are indexed from [0, 255], so we subtract 1 from width/height
+			//pixels are indexed from [0, 255], so we subtract 1 from image width/height
 			auto r = double(i) / (image_width - 1);
 			auto g = double(j) / (image_height - 1);
 			auto b = 0.0;

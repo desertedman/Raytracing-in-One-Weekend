@@ -23,6 +23,7 @@ bool HittableList::isObjectHit(const Ray& curr_ray, const double ray_tmin, const
 
 
 	//vector iterators
+	//TODO: figure out how to rewrite this in terms of for (i = 0; i != end; i++)
 	for (const auto& curr_obj : (*this).m_objects) {
 		if ((*curr_obj).isObjectHit(curr_ray, ray_tmin, closest_so_far, temp_record)) {
 			hit_anything = true;

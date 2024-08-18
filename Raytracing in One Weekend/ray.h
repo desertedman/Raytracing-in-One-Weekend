@@ -12,7 +12,7 @@ public:
 	const Point3& getOrigin() const;
 	const Vec3& getDirection() const;
 
-	Point3 getPosition(double t) const;
+	Point3 getPosition(double parameter_t) const;
 
 private:
 	Point3 m_origin;

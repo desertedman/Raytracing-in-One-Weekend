@@ -9,7 +9,7 @@ bool Sphere::isObjectHit(const Ray& curr_ray, const double ray_tmin, const doubl
 	Vec3 raycast = (*this).m_center - curr_ray.getOrigin();
 	double a = curr_ray.getDirection().getLengthSquared();
 	double h = dot(curr_ray.getDirection(), raycast);
-	auto c = raycast.getLengthSquared() - m_radius * m_radius;
+	auto c = raycast.getLengthSquared() - (*this).m_radius * (*this).m_radius;
 
 	double discriminant = h * h - a * c;
 	if (discriminant < 0) {
@@ -19,6 +19,7 @@ bool Sphere::isObjectHit(const Ray& curr_ray, const double ray_tmin, const doubl
 	double sqrt_discriminant = sqrt(discriminant);
 
 	//Find the nearest root that lies in the acceptable range.
+	//TODO: Comment/note this code
 	auto root = (h - sqrt_discriminant) / a;
 
 	if (root <= ray_tmin || ray_tmax <= root) {

@@ -21,7 +21,7 @@ public:
 
 	bool isObjectHit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const override;
 
-public:
+private:
 	//member list
 	std::vector<shared_ptr<Hittable>> m_objects;	//what is a shared_ptr?
 };

@@ -17,6 +17,6 @@ const Vec3& Ray::getDirection() const {
 	return (*this).m_direction;
 }
 
-Point3 Ray::getPosition(double t) const {
-	return (*this).getOrigin() + t * (*this).getDirection();
+Point3 Ray::getPosition(double parameter_t) const {
+	return (*this).getOrigin() + parameter_t * (*this).getDirection();
 }
