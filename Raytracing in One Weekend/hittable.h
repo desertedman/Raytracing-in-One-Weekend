@@ -1,8 +1,7 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-#include "ray.h"
-//#include "interval.h"
+#include "rtweekend.h"
 
 
 //Records where exactly we hit on the object
