@@ -1,20 +1,35 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 
-#include "rtweekend.h"
 
 class Interval {
 public:
-	Interval();
-	Interval(double min, double max);
+	Interval() {
+		(*this).m_min = +infinity;
+		(*this).m_max = -infinity;
+	}
+	Interval(double min, double max) {
+		(*this).m_min = min;
+		(*this).m_max = max;
+	}
 
-	double getSize() const;
-	double getMax() const;
-	double getMin() const;
+	double getSize() const {
+		return (*this).m_max - (*this).m_min;
+	}
+	double getMax() const {
+		return (*this).m_max;
+	}
+	double getMin() const {
+		return (*this).m_min;
+	}
 
-	bool containsInterval(double x) const;
+	bool containsInterval(double x) const {
+		return (*this).m_min <= x && x <= (*this).m_max;
+	}
 
-	bool surroundsInterval(double x) const;
+	bool surroundsInterval(double x) const {
+		return (*this).m_min < x && x < (*this).m_max;
+	}
 
 public:
 	static const Interval empty, universe;
