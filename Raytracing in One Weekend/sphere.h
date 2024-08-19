@@ -2,7 +2,7 @@
 #define SPHERE_H
 
 #include "hittable.h"
-#include "vec3.h"
+
 
 class Sphere : public Hittable {
 public :
@@ -11,7 +11,7 @@ public :
 		(*this).m_radius = fmax(0, radius);
 	}
 
-	bool isObjectHit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const override {
+	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
 		Vec3 raycast = (*this).m_center - curr_ray.getOrigin();
 		double a = curr_ray.getDirection().getLengthSquared();
 		double h = dot(curr_ray.getDirection(), raycast);
@@ -31,12 +31,12 @@ public :
 
 
 		//If closest root is out of range, t_min < t < t_max, check positive root.
-		if (root_t <= ray_tmin || ray_tmax <= root_t) {
+		if (!ray_t.surroundsInterval(root_t)) {
 			root_t = (h + sqrt_discriminant) / a;
 
 
 			//If positive root still out of range, then we haven't hit object
-			if (root_t <= ray_tmin || ray_tmax <= root_t) {
+			if (!ray_t.surroundsInterval(root_t)) {
 				return false;
 			}
 		}

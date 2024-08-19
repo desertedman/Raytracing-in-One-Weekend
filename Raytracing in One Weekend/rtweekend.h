@@ -7,6 +7,8 @@
 #include <memory>
 
 
+//C++ Std Usings
+
 using std::make_shared;
 using std::shared_ptr;
 
@@ -27,6 +29,7 @@ inline double degrees_to_radians(double degrees) {
 //Common Headers
 
 #include "color.h"
+#include "interval.h"
 #include "ray.h"
 #include "vec3.h"
 

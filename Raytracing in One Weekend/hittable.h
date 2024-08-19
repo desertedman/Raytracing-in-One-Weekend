@@ -1,9 +1,6 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-#include "ray.h"
-//#include "interval.h"
-
 
 //Records where exactly we hit on the object
 class HitRecord {
@@ -46,7 +43,7 @@ public:
 	virtual ~Hittable() = default;
 
 
-	virtual bool isObjectHit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const = 0;
+	virtual bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const = 0;
 };
 
 #endif

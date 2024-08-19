@@ -3,7 +3,6 @@
 
 #include <iostream>
 
-
 class Vec3 {
 public:
 	Vec3();

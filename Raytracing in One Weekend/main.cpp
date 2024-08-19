@@ -13,7 +13,7 @@ using namespace std;
 Color rayColor(const Ray& camera_ray, const Hittable& world) {
 
 	HitRecord record;
-	if (world.isObjectHit(camera_ray, 0, infinity, record)) {
+	if (world.isObjectHit(camera_ray, Interval(0, infinity), record)) {
 		return 0.5 * (record.m_normal + Color(1, 1, 1));
 	}
 

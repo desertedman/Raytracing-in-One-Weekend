@@ -2,12 +2,7 @@
 #define HITTABLE_LIST_H
 
 #include "hittable.h"
-
-#include <memory>
 #include <vector>
-
-using std::make_shared;
-using std::shared_ptr;
 
 
 class HittableList : public Hittable {
@@ -25,18 +20,18 @@ public:
 		(*this).m_objects.push_back(curr_object);
 	}
 
-	bool isObjectHit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const override {
+	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
 		HitRecord temp_record;
 		bool hit_anything = false;
-		double closest_so_far = ray_tmax;
+		double closest_intersection_so_far = ray_t.getMax();
 
 
 		//vector iterators
 		//TODO: figure out how to rewrite this in terms of for (i = 0; i != end; i++)
 		for (const auto& curr_obj : (*this).m_objects) {
-			if ((*curr_obj).isObjectHit(curr_ray, ray_tmin, closest_so_far, temp_record)) {
+			if ((*curr_obj).isObjectHit(curr_ray, Interval(ray_t.getMin(), closest_intersection_so_far), temp_record)) {
 				hit_anything = true;
-				closest_so_far = temp_record.m_parameter_t;
+				closest_intersection_so_far = temp_record.m_parameter_t;
 				record = temp_record;
 			}
 		}
