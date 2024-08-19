@@ -24,7 +24,6 @@ Color rayColor(const Ray& camera_ray, const Hittable& world) {
 
 int main() {
 
-
 	//World
 	HittableList world;
 
@@ -35,6 +34,7 @@ int main() {
 	Camera cam;
 	cam.m_aspect_ratio = 16.0 / 9.0;
 	cam.m_image_width = 400;
+	cam.m_filename = "testoutput.ppm";
 
 	cam.renderCamera(world);
 

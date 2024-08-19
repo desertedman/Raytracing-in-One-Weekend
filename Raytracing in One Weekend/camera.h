@@ -40,6 +40,7 @@ public:
 
 	double m_aspect_ratio = 1.0;	//Ratio of image width over height
 	int m_image_width = 100;		//Rendered image width in pixel count
+	std::string m_filename = "output.ppm";		//Name of file output
 
 
 private:
@@ -116,7 +117,6 @@ private:
 
 	//File output
 	std::ofstream m_outfs;
-	std::string m_filename = "output.ppm";
 
 };
 
