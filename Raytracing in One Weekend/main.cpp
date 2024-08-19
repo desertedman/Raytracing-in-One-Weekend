@@ -10,46 +10,7 @@
 using namespace std;
 
 
-//double isSphereHit(const Point3& center, double radius, const Ray& current_ray) {
-//	Vec3 raycast = center - current_ray.getOrigin();
-//	/*double a = dot(current_ray.getDirection(), current_ray.getDirection());
-//	double b = dot(-2 * current_ray.getDirection(), raycast);
-//	double c = dot(raycast, raycast) - radius * radius;
-//	double discriminant = b * b - 4 * a * c;*/
-//
-//
-//	double a = current_ray.getDirection().getLengthSquared();
-//	double h = dot(current_ray.getDirection(), raycast);
-//	double c = raycast.getLengthSquared() - radius * radius;
-//	double discriminant = h*h - a * c;
-//
-//	//No sphere intersection
-//	if (discriminant < 0) {
-//		return -1.0;
-//	}
-//
-//	else {
-//		//return (-b - sqrt(discriminant)) / (2.0 * a);
-//		//Returns where exactly on the sphere we hit
-//		return (h - sqrt(discriminant)) / a;
-//	}
-//}
-
-
 Color rayColor(const Ray& camera_ray, const Hittable& world) {
-
-	////P(t) = Q + tD
-	////t is not exactly the point of intersection, but it is useful to call it as such for intuition purposes
-	//double intersection = isSphereHit(Point3(0, 0, -1), 0.5, camera_ray);
-
-	////Color the pixel according to the normal vector
-	//if (intersection > 0.0) {
-	//	//Normal vector = unit vector of (Point of intersection - center of sphere)
-	//	Vec3 normal = unitVector(camera_ray.getPosition(intersection) - Vec3(0, 0, -1));
-
-	//	//Because rgb maps [from [0,1], we need to reframe the normalized vector range [-1,1] by multiplying by 0.5
-	//	return 0.5 * Color(normal.getX() + 1, normal.getY() + 1, normal.getZ() + 1);
-	//}
 
 	HitRecord record;
 	if (world.isObjectHit(camera_ray, 0, infinity, record)) {
@@ -131,19 +92,6 @@ int main() {
 		clog << "\rScanlines remaining: " << image_height - j << ' ' << flush;		//what does flush do?
 
 		for (int i = 0; i < image_width; i++) {
-
-			/*
-			//pixels are indexed from [0, 255], so we subtract 1 from image width/height
-			auto r = double(i) / (image_width - 1);
-			auto g = double(j) / (image_height - 1);
-			auto b = 0.0;
-
-			int ir = int(255.999 * r);
-			int ig = int(255.999 * g);
-			int ib = int(255.999 * b);
-
-			out_fs << ir << ' ' << ig << ' ' << ib << endl;
-			*/
 
 			Vec3 pixel_center = pixel00_loc + (i * pixel_delta_horizontal) + (j * pixel_delta_vertical);
 			Vec3 ray_direction = pixel_center - camera_center;

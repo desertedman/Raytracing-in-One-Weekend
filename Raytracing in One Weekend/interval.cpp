@@ -15,6 +15,14 @@ double Interval::getSize() const {
 	return (*this).m_max - (*this).m_min;
 }
 
+double Interval::getMax() const {
+	return (*this).m_max;
+}
+
+double Interval::getMin() const {
+	return (*this).m_min;
+}
+
 bool Interval::containsInterval(double x) const {
 	return (*this).m_min <= x && x <= (*this).m_max;
 }

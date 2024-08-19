@@ -19,7 +19,7 @@ void HittableList::addObject(shared_ptr<Hittable> curr_object) {
 bool HittableList::isObjectHit(const Ray& curr_ray, const double ray_tmin, const double ray_tmax, HitRecord& record) const {
 	HitRecord temp_record;
 	bool hit_anything = false;
-	auto closest_so_far = ray_tmax;
+	double closest_so_far = ray_tmax;
 
 
 	//vector iterators

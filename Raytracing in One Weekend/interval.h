@@ -3,13 +3,14 @@
 
 #include "rtweekend.h"
 
-class Interval
-{
+class Interval {
 public:
 	Interval();
 	Interval(double min, double max);
 
 	double getSize() const;
+	double getMax() const;
+	double getMin() const;
 
 	bool containsInterval(double x) const;
 
@@ -25,4 +26,5 @@ private:
 
 const Interval Interval::empty = Interval(+infinity, -infinity);
 const Interval Interval::universe = Interval(-infinity, +infinity);
+
 #endif
