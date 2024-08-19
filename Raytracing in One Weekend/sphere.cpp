@@ -45,4 +45,3 @@ bool Sphere::isObjectHit(const Ray& curr_ray, const double ray_tmin, const doubl
 
 	return true;
 }
-

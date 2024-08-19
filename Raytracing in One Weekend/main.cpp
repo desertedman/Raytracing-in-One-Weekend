@@ -10,44 +10,50 @@
 using namespace std;
 
 
-double isSphereHit(const Point3& center, double radius, const Ray& current_ray) {
-	Vec3 raycast = center - current_ray.getOrigin();
-	/*double a = dot(current_ray.getDirection(), current_ray.getDirection());
-	double b = dot(-2 * current_ray.getDirection(), raycast);
-	double c = dot(raycast, raycast) - radius * radius;
-	double discriminant = b * b - 4 * a * c;*/
+//double isSphereHit(const Point3& center, double radius, const Ray& current_ray) {
+//	Vec3 raycast = center - current_ray.getOrigin();
+//	/*double a = dot(current_ray.getDirection(), current_ray.getDirection());
+//	double b = dot(-2 * current_ray.getDirection(), raycast);
+//	double c = dot(raycast, raycast) - radius * radius;
+//	double discriminant = b * b - 4 * a * c;*/
+//
+//
+//	double a = current_ray.getDirection().getLengthSquared();
+//	double h = dot(current_ray.getDirection(), raycast);
+//	double c = raycast.getLengthSquared() - radius * radius;
+//	double discriminant = h*h - a * c;
+//
+//	//No sphere intersection
+//	if (discriminant < 0) {
+//		return -1.0;
+//	}
+//
+//	else {
+//		//return (-b - sqrt(discriminant)) / (2.0 * a);
+//		//Returns where exactly on the sphere we hit
+//		return (h - sqrt(discriminant)) / a;
+//	}
+//}
 
-	double a = current_ray.getDirection().getLengthSquared();
-	double h = dot(current_ray.getDirection(), raycast);
-	double c = raycast.getLengthSquared() - radius * radius;
-	double discriminant = h*h - a * c;
 
-	//No sphere intersection
-	if (discriminant < 0) {
-		return -1.0;
-	}
+Color rayColor(const Ray& camera_ray, const Hittable& world) {
 
-	else {
-		//return (-b - sqrt(discriminant)) / (2.0 * a);
-		//Returns where exactly on the sphere we hit
-		return (h - sqrt(discriminant)) / a;
-	}
-}
+	////P(t) = Q + tD
+	////t is not exactly the point of intersection, but it is useful to call it as such for intuition purposes
+	//double intersection = isSphereHit(Point3(0, 0, -1), 0.5, camera_ray);
 
+	////Color the pixel according to the normal vector
+	//if (intersection > 0.0) {
+	//	//Normal vector = unit vector of (Point of intersection - center of sphere)
+	//	Vec3 normal = unitVector(camera_ray.getPosition(intersection) - Vec3(0, 0, -1));
 
-Color rayColor(const Ray& camera_ray) {
+	//	//Because rgb maps [from [0,1], we need to reframe the normalized vector range [-1,1] by multiplying by 0.5
+	//	return 0.5 * Color(normal.getX() + 1, normal.getY() + 1, normal.getZ() + 1);
+	//}
 
-	//P(t) = Q + tD
-	//t is not exactly the point of intersection, but it is useful to call it as such for intuition purposes
-	double intersection = isSphereHit(Point3(0, 0, -1), 0.5, camera_ray);
-
-	//Color the pixel according to the normal vector
-	if (intersection > 0.0) {
-		//Normal vector = unit vector of (Point of intersection - center of sphere)
-		Vec3 normal = unitVector(camera_ray.getPosition(intersection) - Vec3(0, 0, -1));
-
-		//Because rgb maps [from [0,1], we need to reframe the normalized vector range [-1,1] by multiplying by 0.5
-		return 0.5 * Color(normal.getX() + 1, normal.getY() + 1, normal.getZ() + 1);
+	HitRecord record;
+	if (world.isObjectHit(camera_ray, 0, infinity, record)) {
+		return 0.5 * (record.m_normal + Color(1, 1, 1));
 	}
 
 	Vec3 unit_direction = unitVector(camera_ray.getDirection());
@@ -73,6 +79,13 @@ int main() {
 	if (image_height < 1) {
 		image_height = 1;
 	}
+
+
+	//World
+	HittableList world;
+
+	world.addObject(make_shared<Sphere>(Point3(0, 0, -1), 0.5));
+	world.addObject(make_shared<Sphere>(Point3(0, -100.5, -1), 100));
 
 
 	//Camera
@@ -136,7 +149,7 @@ int main() {
 			Vec3 ray_direction = pixel_center - camera_center;
 			Ray camera_ray(camera_center, ray_direction);
 
-			Color pixel_color = rayColor(camera_ray);
+			Color pixel_color = rayColor(camera_ray, world);
 			writeColor(out_fs, pixel_color);
 		}
 
