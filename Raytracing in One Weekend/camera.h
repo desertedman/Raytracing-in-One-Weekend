@@ -128,9 +128,9 @@ private:
 
 
 		if (world.isObjectHit(curr_ray, Interval(0.001, infinity), record)) {
-			Vec3 direction = getRandVecOnHemisphere(record.m_Normal);
+			Vec3 direction = record.m_Normal + generateRandUnitVector();
 
-			//Bounce lighting - when another object is intercepted by a random ray from the source object's surface
+			//Bounce lighting - Surface's color is influenced from random rays shooting out into the world
 			return 0.5 * getRayColor(Ray(record.m_CurrPoint, direction), depth - 1, world);
 		}
 
