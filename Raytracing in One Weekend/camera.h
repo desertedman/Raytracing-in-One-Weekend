@@ -27,7 +27,7 @@ public:
 
 				for (int sample = 0; sample < m_SamplesPerPixel; sample++) {
 					Ray camera_ray = getRay(i, j);
-					pixel_color += getRayColor(camera_ray, world);
+					pixel_color += getRayColor(camera_ray, m_MaxDepth, world);
 				}
 
 				//pixel_color adds up the total color from some number of samples
@@ -47,6 +47,8 @@ public:
 	double m_AspectRatio = 1.0;		//Ratio of image width over height
 	int m_ImageWidth = 100;			//Rendered image width in pixel count
 	int m_SamplesPerPixel = 10;		//Count of random samples for each pixel
+	int m_MaxDepth = 10;			//Maximum number of ray bounces into scene
+
 
 	std::string m_FileName = "output.ppm";		//Name of file output
 
@@ -115,14 +117,21 @@ private:
 		return Vec3(getRandomDouble() - 0.5, getRandomDouble() - 0.5, 0);
 	}
 
-	Color getRayColor(const Ray& curr_ray, const Hittable& world) const {
+	Color getRayColor(const Ray& curr_ray, int depth, const Hittable& world) const {
+
+		//If we've exceeded the ray bounce limit, no more light is gathered;
+		if (depth <= 0) {
+			return Color(0, 0, 0);
+		}
 
 		HitRecord record;
 
-		
-		if (world.isObjectHit(curr_ray, Interval(0, infinity), record)) {
+
+		if (world.isObjectHit(curr_ray, Interval(0.001, infinity), record)) {
 			Vec3 direction = getRandVecOnHemisphere(record.m_Normal);
-			return 0.5 * getRayColor(Ray(record.m_curr_point, direction), world);
+
+			//Bounce lighting - when another object is intercepted by a random ray from the source object's surface
+			return 0.5 * getRayColor(Ray(record.m_CurrPoint, direction), depth - 1, world);
 		}
 
 

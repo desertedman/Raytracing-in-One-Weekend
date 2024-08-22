@@ -43,14 +43,14 @@ public :
 
 
 		//Record where exactly we hit
-		record.m_parameter_t = root_t;
+		record.m_ParameterT = root_t;
 
 		//P(t) = O + tD
 		//Use parameter t to calculate final position of sphere intersection
-		record.m_curr_point = curr_ray.getPosition(record.m_parameter_t);
+		record.m_CurrPoint = curr_ray.getPosition(record.m_ParameterT);
 
 		//Normal vector = unit vector of (Point of intersection - center of sphere)
-		Vec3 outward_normal = (record.m_curr_point - m_Center) / m_Radius;
+		Vec3 outward_normal = (record.m_CurrPoint - m_Center) / m_Radius;
 		record.setFaceNormal(curr_ray, outward_normal);
 
 		return true;

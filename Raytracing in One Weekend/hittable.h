@@ -17,23 +17,23 @@ public:
 		if (getDotProduct(curr_ray.getDirection(), outward_normal) > 0.0) {
 			//ray is inside the sphere
 			(*this).m_Normal = -outward_normal;
-			(*this).m_front_face = false;
+			(*this).m_FrontFace = false;
 		}
 
 		else {
 			//ray is outside the sphere
 			(*this).m_Normal = outward_normal;
-			(*this).m_front_face = true;
+			(*this).m_FrontFace = true;
 		}
 	}
 
 
 public:
 	//member list
-	Point3 m_curr_point;
+	Point3 m_CurrPoint;
 	Vec3 m_Normal;
-	double m_parameter_t = 0;
-	bool m_front_face = false;
+	double m_ParameterT = 0;
+	bool m_FrontFace = false;
 
 
 };
