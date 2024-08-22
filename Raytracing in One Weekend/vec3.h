@@ -67,6 +67,15 @@ public:
 		return (*this).getX() * (*this).getX() + (*this).getY() * (*this).getY() + (*this).getZ() * (*this).getZ();
 	}
 
+	bool isNearZero() const {
+		//Return true if the vector is close to zero in all dimensions.
+
+		auto s = 1e-8;
+
+		//std::fabs returns absolute value of its input.
+		return (std::fabs(m_XYZ[0]) < s) && (std::fabs(m_XYZ[1]) < s) && (std::fabs(m_XYZ[2]) < s);
+	}
+
 	static Vec3 getRandomVector() {
 		return Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble());
 	}
@@ -154,6 +163,10 @@ inline Vec3 getRandVecOnHemisphere(const Vec3& normal) {
 		return -on_unit_sphere;
 	}
 
+}
+
+inline Vec3 reflectVector(const Vec3& incoming_vector, const Vec3& normal_vector) {
+	return incoming_vector - 2 * getDotProduct(incoming_vector, normal_vector) * normal_vector;
 }
 
 #endif

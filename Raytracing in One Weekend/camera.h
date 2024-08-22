@@ -3,6 +3,7 @@
 
 #include "rtweekend.h"
 #include "hittable.h"
+#include "material.h"
 
 #include <string>
 #include <fstream>
@@ -30,9 +31,9 @@ public:
 					pixel_color += getRayColor(camera_ray, m_MaxDepth, world);
 				}
 
+
 				//pixel_color adds up the total color from some number of samples
-				//Then the final pixel color is multiplied by 1/num_of_samples,
-				//which is the average of the final color
+				//Then the final pixel color is averaged out over the number of samples
 				writeColor(m_OutFS, m_PixelSamplesScale * pixel_color);
 			}
 		}
@@ -128,10 +129,20 @@ private:
 
 
 		if (world.isObjectHit(curr_ray, Interval(0.001, infinity), record)) {
-			Vec3 direction = record.m_Normal + generateRandUnitVector();
+			Ray scattered_ray;
+			Color attenuation;
 
-			//Bounce lighting - Surface's color is influenced from random rays shooting out into the world
-			return 0.5 * getRayColor(Ray(record.m_CurrPoint, direction), depth - 1, world);
+			//Vec3 direction = record.m_Normal + generateRandUnitVector();
+
+			if (record.m_CurrMaterial->isRayScattered(curr_ray, record, attenuation, scattered_ray)) {
+				return attenuation * getRayColor(scattered_ray, depth - 1, world);
+			}
+
+			return Color(0, 0, 0);
+
+			//Recursively determine the color of ray by generating new rays at the point of intersection
+			//Fire off rays until max ray bounce depth, or until we hit nothing
+			//return 0.5 * getRayColor(Ray(record.m_CurrPoint, direction), depth - 1, world);
 		}
 
 

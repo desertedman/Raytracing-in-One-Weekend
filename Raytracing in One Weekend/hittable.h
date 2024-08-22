@@ -2,6 +2,9 @@
 #define HITTABLE_H
 
 
+class Material;
+
+
 //Records where exactly we hit on the object
 class HitRecord {
 public:
@@ -9,10 +12,10 @@ public:
 		//Sets the hit record normal vector.
 		//Note: the parameter 'outward_normal' is assumed to have unit length.
 
+
 		//Dot product: |A||B|cos(theta)
 		//If rays are opposite each other, then theta > 90 degrees; dot product will be negative
 		//If rays are same direction, then theta < 90 degrees; dot product will be positive
-
 
 		if (getDotProduct(curr_ray.getDirection(), outward_normal) > 0.0) {
 			//ray is inside the sphere
@@ -34,7 +37,7 @@ public:
 	Vec3 m_Normal;
 	double m_ParameterT = 0;
 	bool m_FrontFace = false;
-
+	shared_ptr<Material> m_CurrMaterial;
 
 };
 

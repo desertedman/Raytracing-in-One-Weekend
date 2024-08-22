@@ -6,9 +6,10 @@
 
 class Sphere : public Hittable {
 public :
-	Sphere(const Point3& center, double radius) {
+	Sphere(const Point3& center, double radius, shared_ptr<Material> material) {
 		m_Center = center;
 		m_Radius = fmax(0, radius);
+		m_CurrMaterial = material;
 	}
 
 	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
@@ -43,15 +44,18 @@ public :
 
 
 		//Record where exactly we hit
-		record.m_ParameterT = root_t;
-
 		//P(t) = O + tD
 		//Use parameter t to calculate final position of sphere intersection
+		record.m_ParameterT = root_t;
 		record.m_CurrPoint = curr_ray.getPosition(record.m_ParameterT);
+
 
 		//Normal vector = unit vector of (Point of intersection - center of sphere)
 		Vec3 outward_normal = (record.m_CurrPoint - m_Center) / m_Radius;
 		record.setFaceNormal(curr_ray, outward_normal);
+
+
+		record.m_CurrMaterial = (*this).m_CurrMaterial;
 
 		return true;
 	}
@@ -60,6 +64,7 @@ public :
 private:
 	Point3 m_Center;
 	double m_Radius;
+	shared_ptr<Material> m_CurrMaterial;
 };
 
 #endif
