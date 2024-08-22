@@ -44,9 +44,9 @@ public:
 public:
 	//Public variables
 
-	double m_AspectRatio = 1.0;	//Ratio of image width over height
-	int m_ImageWidth = 100;		//Rendered image width in pixel count
-	int m_SamplesPerPixel = 10;	//Count of random samples for each pixel
+	double m_AspectRatio = 1.0;		//Ratio of image width over height
+	int m_ImageWidth = 100;			//Rendered image width in pixel count
+	int m_SamplesPerPixel = 10;		//Count of random samples for each pixel
 
 	std::string m_FileName = "output.ppm";		//Name of file output
 
@@ -112,20 +112,22 @@ private:
 
 	Vec3 sampleSquare() const {
 		//Returns the vector to a random point in the [-.5, -.5] - [+.5, +.5] unit square.
-		return Vec3(random_double() - 0.5, random_double() - 0.5, 0);
+		return Vec3(getRandomDouble() - 0.5, getRandomDouble() - 0.5, 0);
 	}
 
 	Color getRayColor(const Ray& curr_ray, const Hittable& world) const {
 
 		HitRecord record;
 
+		
 		if (world.isObjectHit(curr_ray, Interval(0, infinity), record)) {
-			return 0.5 * (record.m_Normal + Color(1, 1, 1));
+			Vec3 direction = getRandVecOnHemisphere(record.m_Normal);
+			return 0.5 * getRayColor(Ray(record.m_curr_point, direction), world);
 		}
 
 
 		//Background Color
-		Vec3 unit_direction = unitVector(curr_ray.getDirection());
+		Vec3 unit_direction = getUnitVector(curr_ray.getDirection());
 		//Shift normalized Y coordinate from [-1, 1] to [0, 1] range
 		auto a = 0.5 * (unit_direction.getY() + 1.0);
 		//Return linear blended color of background

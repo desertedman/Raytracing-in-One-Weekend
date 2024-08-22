@@ -5,28 +5,78 @@
 
 class Vec3 {
 public:
-	Vec3();
-	Vec3(double x, double y, double z);
+	Vec3() {
+		m_XYZ[0] = 0;
+		m_XYZ[1] = 0;
+		m_XYZ[2] = 0;
+	}
 
-	double getX() const;
-	double getY() const;
-	double getZ() const;
+	Vec3(double x, double y, double z) {
+		m_XYZ[0] = x;
+		m_XYZ[1] = y;
+		m_XYZ[2] = z;
+	}
 
-	Vec3 operator-() const;
-	double operator[](int i) const;
-	//double& operator[](int i) const;	
-	// i dont know why this doesnt work if i seperate the function definition from declaration
-	double& operator[](int i) { return m_xyz[i]; }
+	double getX() const {
+		return m_XYZ[0];
+	}
 
-	Vec3& operator+=(const Vec3& rhs);
-	Vec3& operator*=(double t);
-	Vec3& operator/=(double t);
+	double getY() const {
+		return m_XYZ[1];
+	}
 
-	double getLength() const;
-	double getLengthSquared() const;
+	double getZ() const {
+		return m_XYZ[2];
+	}
+
+	Vec3 operator-() const {
+		return Vec3(-(*this).getX(), -(*this).getY(), -(*this).getZ());
+	}
+
+	double operator[](int i) const {
+		return m_XYZ[i];
+	}
+
+	double& operator[](int i) {
+		return m_XYZ[i];
+	}
+
+	Vec3& operator+=(const Vec3& rhs) {
+		m_XYZ[0] += rhs.getX();
+		m_XYZ[1] += rhs.getY();
+		m_XYZ[2] += rhs.getZ();
+		return (*this);
+	}
+
+	Vec3& operator*=(double t) {
+		m_XYZ[0] *= t;
+		m_XYZ[1] *= t;
+		m_XYZ[2] *= t;
+		return (*this);
+	}
+
+	Vec3& operator/=(double t) {
+		return (*this) *= (1 / t);
+	}
+
+	double getLength() const {
+		return std::sqrt((*this).getLengthSquared());
+	}
+
+	double getLengthSquared() const {
+		return (*this).getX() * (*this).getX() + (*this).getY() * (*this).getY() + (*this).getZ() * (*this).getZ();
+	}
+
+	static Vec3 getRandomVector() {
+		return Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble());
+	}
+
+	static Vec3 getRandomVector(double min, double max) {
+		return Vec3(getRandomDouble(min, max), getRandomDouble(min, max), getRandomDouble(min, max));
+	}
 
 private:
-	double m_xyz[3];
+	double m_XYZ[3];
 };
 
 
@@ -35,24 +85,75 @@ using Point3 = Vec3;
 
 //Vector Utility Functions
 
-std::ostream& operator<<(std::ostream& out, const Vec3& v);
+std::ostream& operator<<(std::ostream& out, const Vec3& vector) {
+	return out << vector.getX() << ' ' << vector.getY() << ' ' << vector.getZ();
+}
 
-Vec3 operator+(const Vec3& lhs, const Vec3& rhs);
+inline Vec3 operator+(const Vec3& lhs, const Vec3& rhs) {
+	return Vec3(lhs.getX() + rhs.getX(), lhs.getY() + rhs.getY(), lhs.getZ() + rhs.getZ());
+}
 
-Vec3 operator-(const Vec3& lhs, const Vec3& rhs);
+inline Vec3 operator-(const Vec3& lhs, const Vec3& rhs) {
+	return Vec3(lhs.getX() - rhs.getX(), lhs.getY() - rhs.getY(), lhs.getZ() - rhs.getZ());
+}
 
-Vec3 operator*(const Vec3& lhs, const Vec3& rhs);
+inline Vec3 operator*(const Vec3& lhs, const Vec3& rhs) {
+	return Vec3(lhs.getX() * rhs.getX(), lhs.getY() * rhs.getY(), lhs.getZ() * rhs.getZ());
+}
 
-Vec3 operator*(double lhs, const Vec3& rhs);
+inline Vec3 operator*(double lhs, const Vec3& rhs) {
+	return Vec3(lhs * rhs.getX(), lhs * rhs.getY(), lhs * rhs.getZ());
+}
 
-Vec3 operator*(const Vec3& lhs, double rhs);
+inline Vec3 operator*(const Vec3& lhs, double rhs) {
+	return rhs * lhs;
+}
 
-Vec3 operator/(const Vec3& lhs, double rhs);
+inline Vec3 operator/(const Vec3& lhs, double rhs) {
+	return lhs * (1 / rhs);
+}
 
-double dot(const Vec3& lhs, const Vec3& rhs);
+inline double getDotProduct(const Vec3& lhs, const Vec3& rhs) {
+	return lhs.getX() * rhs.getX()
+		+ lhs.getY() * rhs.getY()
+		+ lhs.getZ() * rhs.getZ();
+}
 
-Vec3 cross(const Vec3& lhs, const Vec3& rhs);
+inline Vec3 getCrossProduct(const Vec3& lhs, const Vec3& rhs) {
+	return Vec3(lhs.getY() * rhs.getZ() - lhs.getZ() * rhs.getY(),
+		lhs.getZ() * rhs.getX() - lhs.getX() * rhs.getZ(),
+		lhs.getX() * rhs.getY() - lhs.getY() * rhs.getX());
+}
 
-Vec3 unitVector(const Vec3& vector);
+inline Vec3 getUnitVector(const Vec3& vector) {
+	return vector / vector.getLength();
+}
+
+inline Vec3 generateRandInUnitSphere() {
+	while (true) {
+		Vec3 rand_point = Vec3::getRandomVector(-1, 1);
+
+		if (rand_point.getLengthSquared() < 1) {
+			return rand_point;
+		}
+	}
+}
+
+inline Vec3 generateRandUnitVector() {
+	return getUnitVector(generateRandInUnitSphere());
+}
+
+inline Vec3 getRandVecOnHemisphere(const Vec3& normal) {
+	Vec3 on_unit_sphere = generateRandUnitVector();
+
+	if (getDotProduct(on_unit_sphere, normal) > 0.0) {
+		return on_unit_sphere;
+	}
+
+	else {
+		return -on_unit_sphere;
+	}
+
+}
 
 #endif

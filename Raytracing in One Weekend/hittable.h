@@ -14,7 +14,7 @@ public:
 		//If rays are same direction, then theta < 90 degrees; dot product will be positive
 
 
-		if (dot(curr_ray.getDirection(), outward_normal) > 0.0) {
+		if (getDotProduct(curr_ray.getDirection(), outward_normal) > 0.0) {
 			//ray is inside the sphere
 			(*this).m_Normal = -outward_normal;
 			(*this).m_front_face = false;

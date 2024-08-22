@@ -14,7 +14,7 @@ public :
 	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
 		Vec3 raycast = m_Center - curr_ray.getOrigin();
 		double a = curr_ray.getDirection().getLengthSquared();
-		double h = dot(curr_ray.getDirection(), raycast);
+		double h = getDotProduct(curr_ray.getDirection(), raycast);
 		double c = raycast.getLengthSquared() - m_Radius * m_Radius;
 
 		double discriminant = h * h - a * c;
