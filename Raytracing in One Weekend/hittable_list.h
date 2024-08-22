@@ -13,11 +13,11 @@ public:
 	}
 
 	void clearList() {
-		(*this).m_objects.clear();
+		(*this).m_Objects.clear();
 	}
 
 	void addObject(shared_ptr<Hittable> curr_object) {
-		(*this).m_objects.push_back(curr_object);
+		(*this).m_Objects.push_back(curr_object);
 	}
 
 	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
@@ -28,7 +28,7 @@ public:
 
 		//vector iterators
 		//TODO: figure out how to rewrite this in terms of for (i = 0; i != end; i++)
-		for (const auto& curr_obj : (*this).m_objects) {
+		for (const auto& curr_obj : m_Objects) {
 			if ((*curr_obj).isObjectHit(curr_ray, Interval(ray_t.getMin(), closest_intersection_so_far), temp_record)) {
 				hit_anything = true;
 				closest_intersection_so_far = temp_record.m_parameter_t;
@@ -41,7 +41,7 @@ public:
 
 private:
 	//member list
-	std::vector<shared_ptr<Hittable>> m_objects;	//what is a shared_ptr?
+	std::vector<shared_ptr<Hittable>> m_Objects;	//what is a shared_ptr?
 };
 
 #endif

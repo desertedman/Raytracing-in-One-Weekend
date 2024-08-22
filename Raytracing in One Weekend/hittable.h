@@ -16,13 +16,13 @@ public:
 
 		if (dot(curr_ray.getDirection(), outward_normal) > 0.0) {
 			//ray is inside the sphere
-			(*this).m_normal = -outward_normal;
+			(*this).m_Normal = -outward_normal;
 			(*this).m_front_face = false;
 		}
 
 		else {
 			//ray is outside the sphere
-			(*this).m_normal = outward_normal;
+			(*this).m_Normal = outward_normal;
 			(*this).m_front_face = true;
 		}
 	}
@@ -31,7 +31,7 @@ public:
 public:
 	//member list
 	Point3 m_curr_point;
-	Vec3 m_normal;
+	Vec3 m_Normal;
 	double m_parameter_t = 0;
 	bool m_front_face = false;
 

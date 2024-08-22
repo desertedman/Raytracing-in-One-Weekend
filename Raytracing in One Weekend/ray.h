@@ -8,15 +8,15 @@ class Ray {
 public:
 	Ray() = default;
 	Ray(const Point3& origin, const Vec3& direction) {
-		(*this).m_origin = origin;
-		(*this).m_direction = direction;
+		(*this).m_Origin = origin;
+		(*this).m_Direction = direction;
 	}
 
 	const Point3& getOrigin() const {
-		return (*this).m_origin;
+		return m_Origin;
 	}
 	const Vec3& getDirection() const {
-		return (*this).m_direction;
+		return m_Direction;
 	}
 
 	Point3 getPosition(double parameter_t) const {
@@ -24,8 +24,8 @@ public:
 	}
 
 private:
-	Point3 m_origin;
-	Vec3 m_direction;
+	Point3 m_Origin;
+	Vec3 m_Direction;
 };
 
 #endif

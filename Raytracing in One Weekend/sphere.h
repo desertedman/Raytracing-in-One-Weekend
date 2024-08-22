@@ -7,15 +7,15 @@
 class Sphere : public Hittable {
 public :
 	Sphere(const Point3& center, double radius) {
-		(*this).m_center = center;
-		(*this).m_radius = fmax(0, radius);
+		m_Center = center;
+		m_Radius = fmax(0, radius);
 	}
 
 	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
-		Vec3 raycast = (*this).m_center - curr_ray.getOrigin();
+		Vec3 raycast = m_Center - curr_ray.getOrigin();
 		double a = curr_ray.getDirection().getLengthSquared();
 		double h = dot(curr_ray.getDirection(), raycast);
-		double c = raycast.getLengthSquared() - (*this).m_radius * (*this).m_radius;
+		double c = raycast.getLengthSquared() - m_Radius * m_Radius;
 
 		double discriminant = h * h - a * c;
 		if (discriminant < 0) {
@@ -50,7 +50,7 @@ public :
 		record.m_curr_point = curr_ray.getPosition(record.m_parameter_t);
 
 		//Normal vector = unit vector of (Point of intersection - center of sphere)
-		Vec3 outward_normal = (record.m_curr_point - (*this).m_center) / (*this).m_radius;
+		Vec3 outward_normal = (record.m_curr_point - m_Center) / m_Radius;
 		record.setFaceNormal(curr_ray, outward_normal);
 
 		return true;
@@ -58,8 +58,8 @@ public :
 
 
 private:
-	Point3 m_center;
-	double m_radius;
+	Point3 m_Center;
+	double m_Radius;
 };
 
 #endif
