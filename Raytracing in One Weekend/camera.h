@@ -60,7 +60,7 @@ private:
 	void initializeCamera() {
 
 		//Ensure that a valid file can be output.
-		m_OutFS.open(m_FileName);
+		m_OutFS.open(".\\output\\" + m_FileName);
 		if (!m_OutFS.good()) {
 			std::cout << "Error! Cannot write to file!" << std::endl;
 			exit(1);
