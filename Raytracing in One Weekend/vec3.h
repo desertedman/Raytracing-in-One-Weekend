@@ -138,18 +138,16 @@ inline Vec3 getUnitVector(const Vec3& vector) {
 	return vector / vector.getLength();
 }
 
-inline Vec3 generateRandInUnitSphere() {
+// Generate a random vector within the unit sphere.
+inline Vec3 generateRandUnitVector() {
 	while (true) {
 		Vec3 rand_point = Vec3::getRandomVector(-1, 1);
+		double length_squared = rand_point.getLengthSquared();
 
-		if (rand_point.getLengthSquared() < 1) {
-			return rand_point;
+		if (1e-16 < length_squared && length_squared <= 1) {
+			return rand_point / sqrt(length_squared);
 		}
 	}
-}
-
-inline Vec3 generateRandUnitVector() {
-	return getUnitVector(generateRandInUnitSphere());
 }
 
 inline Vec3 getRandVecOnHemisphere(const Vec3& normal) {

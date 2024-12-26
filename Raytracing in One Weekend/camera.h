@@ -132,8 +132,6 @@ private:
 			Ray scattered_ray;
 			Color attenuation;
 
-			//Vec3 direction = record.m_Normal + generateRandUnitVector();
-
 			if (record.m_CurrMaterial->isRayScattered(curr_ray, record, attenuation, scattered_ray)) {
 				return attenuation * getRayColor(scattered_ray, depth - 1, world);
 			}
@@ -142,7 +140,6 @@ private:
 
 			//Recursively determine the color of ray by generating new rays at the point of intersection
 			//Fire off rays until max ray bounce depth, or until we hit nothing
-			//return 0.5 * getRayColor(Ray(record.m_CurrPoint, direction), depth - 1, world);
 		}
 
 
