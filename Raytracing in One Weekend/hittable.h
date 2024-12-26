@@ -8,24 +8,24 @@ class Material;
 //Records where exactly we hit on the object
 class HitRecord {
 public:
-	void setFaceNormal(const Ray& curr_ray, const Vec3& outward_normal) {
+	void setFaceNormal(const Ray& currRay, const Vec3& outwardNormal) {
 		//Sets the hit record normal vector.
-		//Note: the parameter 'outward_normal' is assumed to have unit length.
+		//Note: the parameter 'outwardNormal' is assumed to have unit length.
 
 
 		//Dot product: |A||B|cos(theta)
 		//If rays are opposite each other, then theta > 90 degrees; dot product will be negative
 		//If rays are same direction, then theta < 90 degrees; dot product will be positive
 
-		if (getDotProduct(curr_ray.getDirection(), outward_normal) > 0.0) {
+		if (getDotProduct(currRay.getDirection(), outwardNormal) > 0.0) {
 			//ray is inside the sphere
-			(*this).normal = -outward_normal;
+			(*this).normal = -outwardNormal;
 			(*this).frontFace = false;
 		}
 
 		else {
 			//ray is outside the sphere
-			(*this).normal = outward_normal;
+			(*this).normal = outwardNormal;
 			(*this).frontFace = true;
 		}
 	}
@@ -46,7 +46,7 @@ public:
 	virtual ~Hittable() = default;
 
 
-	virtual bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const = 0;
+	virtual bool isObjectHit(const Ray& currRay, Interval rayT, HitRecord& record) const = 0;
 };
 
 #endif

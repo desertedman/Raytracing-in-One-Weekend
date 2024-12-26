@@ -12,10 +12,10 @@ public :
 		mCurrMaterial = material;
 	}
 
-	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
-		Vec3 raycast = mCenter - curr_ray.getOrigin();
-		double a = curr_ray.getDirection().getLengthSquared();
-		double h = getDotProduct(curr_ray.getDirection(), raycast);
+	bool isObjectHit(const Ray& currRay, Interval rayT, HitRecord& record) const override {
+		Vec3 raycast = mCenter - currRay.getOrigin();
+		double a = currRay.getDirection().getLengthSquared();
+		double h = getDotProduct(currRay.getDirection(), raycast);
 		double c = raycast.getLengthSquared() - mRadius * mRadius;
 
 		double discriminant = h * h - a * c;
@@ -23,21 +23,21 @@ public :
 			return false;
 		}
 
-		double sqrt_discriminant = sqrt(discriminant);
+		double sqrtDiscriminant = sqrt(discriminant);
 
 		//Find the nearest root that lies in the acceptable range.
 		// t = [h +/- sqrt(D)] / a
 		//Assume closest point of intersection first.
-		double root_t = (h - sqrt_discriminant) / a;
+		double rootT = (h - sqrtDiscriminant) / a;
 
 
 		//If closest root is out of range, t_min < t < t_max, check positive root.
-		if (!ray_t.surroundsInterval(root_t)) {
-			root_t = (h + sqrt_discriminant) / a;
+		if (!rayT.surroundsInterval(rootT)) {
+			rootT = (h + sqrtDiscriminant) / a;
 
 
 			//If positive root still out of range, then we haven't hit object
-			if (!ray_t.surroundsInterval(root_t)) {
+			if (!rayT.surroundsInterval(rootT)) {
 				return false;
 			}
 		}
@@ -46,13 +46,13 @@ public :
 		//Record where exactly we hit
 		//P(t) = O + tD
 		//Use parameter t to calculate final position of sphere intersection
-		record.parameterT = root_t;
-		record.currPoint = curr_ray.getPosition(record.parameterT);
+		record.parameterT = rootT;
+		record.currPoint = currRay.getPosition(record.parameterT);
 
 
 		//Normal vector = unit vector of (Point of intersection - center of sphere)
-		Vec3 outward_normal = (record.currPoint - mCenter) / mRadius;
-		record.setFaceNormal(curr_ray, outward_normal);
+		Vec3 outwardNormal = (record.currPoint - mCenter) / mRadius;
+		record.setFaceNormal(currRay, outwardNormal);
 
 
 		record.currMaterial = (*this).mCurrMaterial;

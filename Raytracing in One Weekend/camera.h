@@ -24,17 +24,17 @@ public:
 
 			for (int i = 0; i < imageWidth; i++) {
 
-				Color pixel_color(0, 0, 0);
+				Color pixelColor(0, 0, 0);
 
 				for (int sample = 0; sample < samplesPerPixel; sample++) {
-					Ray camera_ray = getRay(i, j);
-					pixel_color += getRayColor(camera_ray, maxDepth, world);
+					Ray cameraRay = getRay(i, j);
+					pixelColor += getRayColor(cameraRay, maxDepth, world);
 				}
 
 
-				//pixel_color adds up the total color from some number of samples
+				//pixelColor adds up the total color from some number of samples
 				//Then the final pixel color is averaged out over the number of samples
-				writeColor(outFS, mPixelSamplesScale * pixel_color);
+				writeColor(outFS, mPixelSamplesScale * pixelColor);
 			}
 		}
 
@@ -79,23 +79,23 @@ private:
 
 
 		//Determine viewport dimensions.
-		double focal_length = 1.0;
-		double viewport_height = 2.0;
-		double viewport_width = viewport_height * (double(imageWidth) / mImageHeight);
+		double focalLength = 1.0;
+		double viewportHeight = 2.0;
+		double viewportWidth = viewportHeight * (double(imageWidth) / mImageHeight);
 
 
 		//Calculate the vectors across the horizontal and down the vertical viewport edges.
-		Vec3 viewport_u = Vec3(viewport_width, 0, 0);
-		Vec3 viewport_v = Vec3(0, -viewport_height, 0);
+		Vec3 viewportU = Vec3(viewportWidth, 0, 0);
+		Vec3 viewportV = Vec3(0, -viewportHeight, 0);
 
 
 		//Calculate the horizontal and vertical delta vectors from pixel to pixel.
-		mPixelDeltaU = viewport_u / imageWidth;
-		mPixelDeltaV = viewport_v / mImageHeight;
+		mPixelDeltaU = viewportU / imageWidth;
+		mPixelDeltaV = viewportV / mImageHeight;
 
 
 		//Calculate location of upper left pixel.
-		auto viewport_upper_left = mCenter - Vec3(0, 0, focal_length) - viewport_u / 2 - viewport_v / 2;
+		auto viewport_upper_left = mCenter - Vec3(0, 0, focalLength) - viewportU / 2 - viewportV / 2;
 		mPixel00Loc = viewport_upper_left + 0.5 * (mPixelDeltaU + mPixelDeltaV);
 
 	}
@@ -107,10 +107,10 @@ private:
 		Vec3 offset = sampleSquare();
 		auto pixel_sample = mPixel00Loc + ((i + offset.getX()) * mPixelDeltaU) + ((j + offset.getY()) * mPixelDeltaV);
 
-		auto ray_origin = mCenter;
-		auto ray_direction = pixel_sample - ray_origin;
+		auto rayOrigin = mCenter;
+		auto rayDirection = pixel_sample - rayOrigin;
 
-		return Ray(ray_origin, ray_direction);
+		return Ray(rayOrigin, rayDirection);
 	}
 
 	Vec3 sampleSquare() const {

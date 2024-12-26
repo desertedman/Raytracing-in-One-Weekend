@@ -5,45 +5,45 @@
 class Interval {
 public:
 	Interval() {
-		m_Min = +infinity;
-		m_Max = -infinity;
+		mMin = +infinity;
+		mMax = -infinity;
 	}
 
 	Interval(double min, double max) {
-		m_Min = min;
-		m_Max = max;
+		mMin = min;
+		mMax = max;
 	}
 
 
 	double getSize() const {
-		return m_Max - m_Min;
+		return mMax - mMin;
 	}
 
 	double getMax() const {
-		return m_Max;
+		return mMax;
 	}
 
 	double getMin() const {
-		return m_Min;
+		return mMin;
 	}
 
 
 	bool containsInterval(double x) const {
-		return m_Min <= x && x <= m_Max;
+		return mMin <= x && x <= mMax;
 	}
 
 	bool surroundsInterval(double x) const {
-		return m_Min < x && x < m_Max;
+		return mMin < x && x < mMax;
 	}
 
 
 	double clampToInterval(double x) const {
-		if (x < m_Min) {
-			return m_Min;
+		if (x < mMin) {
+			return mMin;
 		}
 
-		if (x > m_Max) {
-			return m_Max;
+		if (x > mMax) {
+			return mMax;
 		}
 
 		return x;
@@ -53,7 +53,7 @@ public:
 	static const Interval empty, universe;
 
 private:
-	double m_Min, m_Max;
+	double mMin, mMax;
 };
 
 

@@ -8,40 +8,40 @@
 class HittableList : public Hittable {
 public:
 	HittableList() {}
-	HittableList(shared_ptr<Hittable> curr_object) {
-		addObject(curr_object);
+	HittableList(shared_ptr<Hittable> currObject) {
+		addObject(currObject);
 	}
 
 	void clearList() {
-		(*this).m_Objects.clear();
+		(*this).mObjects.clear();
 	}
 
-	void addObject(shared_ptr<Hittable> curr_object) {
-		(*this).m_Objects.push_back(curr_object);
+	void addObject(shared_ptr<Hittable> currObject) {
+		(*this).mObjects.push_back(currObject);
 	}
 
-	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
-		HitRecord temp_record;
-		bool hit_anything = false;
-		double closest_intersection_so_far = ray_t.getMax();
+	bool isObjectHit(const Ray& currRay, Interval rayT, HitRecord& record) const override {
+		HitRecord tempRecord;
+		bool hitAnything = false;
+		double closestIntersectionSoFar = rayT.getMax();
 
 
 		//vector iterators
 		//TODO: figure out how to rewrite this in terms of for (i = 0; i != end; i++)
-		for (const auto& curr_obj : m_Objects) {
-			if ((*curr_obj).isObjectHit(curr_ray, Interval(ray_t.getMin(), closest_intersection_so_far), temp_record)) {
-				hit_anything = true;
-				closest_intersection_so_far = temp_record.parameterT;
-				record = temp_record;
+		for (const auto& currObj : mObjects) {
+			if ((*currObj).isObjectHit(currRay, Interval(rayT.getMin(), closestIntersectionSoFar), tempRecord)) {
+				hitAnything = true;
+				closestIntersectionSoFar = tempRecord.parameterT;
+				record = tempRecord;
 			}
 		}
 
-		return hit_anything;
+		return hitAnything;
 	}
 
 private:
 	//member list
-	std::vector<shared_ptr<Hittable>> m_Objects;	//what is a shared_ptr?
+	std::vector<shared_ptr<Hittable>> mObjects;	//what is a shared_ptr?
 };
 
 #endif

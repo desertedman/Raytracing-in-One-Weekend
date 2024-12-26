@@ -16,15 +16,15 @@ int main() {
 	//World
 	HittableList world;
 
-	auto material_ground = make_shared<Lambertian>(Color(0.8, 0.8, 0.0));
-	auto material_center = make_shared<Lambertian>(Color(0.1, 0.2, 0.5));
-	auto material_left = make_shared<Metal>(Color(0.8, 0.8, 0.8), 0.3);
-	auto material_right = make_shared<Metal>(Color(0.8, 0.6, 0.2));
+	auto materialGround = make_shared<Lambertian>(Color(0.8, 0.8, 0.0));
+	auto materialCenter = make_shared<Lambertian>(Color(0.1, 0.2, 0.5));
+	auto materialLeft = make_shared<Metal>(Color(0.8, 0.8, 0.8), 0.3);
+	auto materialRight = make_shared<Metal>(Color(0.8, 0.6, 0.2));
 
-	world.addObject(make_shared<Sphere>(Point3(0.0, -100.5, -1.0), 100.0, material_ground));
-	world.addObject(make_shared<Sphere>(Point3(0.0, 0.0, -1.2), 0.5, material_center));
-	world.addObject(make_shared<Sphere>(Point3(-1.0, 0.0, -1.0), 0.5, material_left));
-	world.addObject(make_shared<Sphere>(Point3(1.0, 0.0, -1.0), 0.5, material_right));
+	world.addObject(make_shared<Sphere>(Point3(0.0, -100.5, -1.0), 100.0, materialGround));
+	world.addObject(make_shared<Sphere>(Point3(0.0, 0.0, -1.2), 0.5, materialCenter));
+	world.addObject(make_shared<Sphere>(Point3(-1.0, 0.0, -1.0), 0.5, materialLeft));
+	world.addObject(make_shared<Sphere>(Point3(1.0, 0.0, -1.0), 0.5, materialRight));
 
 
 	Camera cam;

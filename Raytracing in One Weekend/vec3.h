@@ -141,30 +141,30 @@ inline Vec3 getUnitVector(const Vec3& vector) {
 // Generate a random vector within the unit sphere.
 inline Vec3 generateRandUnitVector() {
 	while (true) {
-		Vec3 rand_point = Vec3::getRandomVector(-1, 1);
-		double length_squared = rand_point.getLengthSquared();
+		Vec3 randPoint = Vec3::getRandomVector(-1, 1);
+		double lengthSquared = randPoint.getLengthSquared();
 
-		if (1e-16 < length_squared && length_squared <= 1) {
-			return rand_point / sqrt(length_squared);
+		if (1e-16 < lengthSquared && lengthSquared <= 1) {
+			return randPoint / sqrt(lengthSquared);
 		}
 	}
 }
 
 inline Vec3 getRandVecOnHemisphere(const Vec3& normal) {
-	Vec3 on_unit_sphere = generateRandUnitVector();
+	Vec3 onUnitSphere = generateRandUnitVector();
 
-	if (getDotProduct(on_unit_sphere, normal) > 0.0) {
-		return on_unit_sphere;
+	if (getDotProduct(onUnitSphere, normal) > 0.0) {
+		return onUnitSphere;
 	}
 
 	else {
-		return -on_unit_sphere;
+		return -onUnitSphere;
 	}
 
 }
 
-inline Vec3 reflectVector(const Vec3& incoming_vector, const Vec3& normal_vector) {
-	return incoming_vector - 2 * getDotProduct(incoming_vector, normal_vector) * normal_vector;
+inline Vec3 reflectVector(const Vec3& incomingVector, const Vec3& normalVector) {
+	return incomingVector - 2 * getDotProduct(incomingVector, normalVector) * normalVector;
 }
 
 #endif

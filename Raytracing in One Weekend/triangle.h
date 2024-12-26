@@ -6,21 +6,21 @@
 
 class Triangle : public Hittable {
 public:
-	Triangle(const Point3& input_A, const Point3& input_B, const Point3& input_C, shared_ptr<Material> material) {
-		m_Vertex0 = input_A;
-		m_Vertex1 = input_B;
-		m_Vertex2 = input_C;
+	Triangle(const Point3& inputA, const Point3& inputB, const Point3& inputC, shared_ptr<Material> material) {
+		mVertex0 = inputA;
+		mVertex1 = inputB;
+		mVertex2 = inputC;
 		mCurrMaterial = material;
 	}
 
-	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
-		Vec3 A = m_Vertex1 - m_Vertex0;
-		Vec3 B = m_Vertex2 - m_Vertex0;
+	bool isObjectHit(const Ray& currRay, Interval rayT, HitRecord& record) const override {
+		Vec3 A = mVertex1 - mVertex0;
+		Vec3 B = mVertex2 - mVertex0;
 		Vec3 C = getCrossProduct(A, B);		
-		Vec3 outward_normal = getUnitVector(C);
+		Vec3 outwardNormal = getUnitVector(C);
 
 		//Set normal to be facing the correct direction; we want normals to point towards incoming ray
-		record.setFaceNormal(curr_ray, outward_normal);
+		record.setFaceNormal(currRay, outwardNormal);
 
 
 
@@ -30,9 +30,9 @@ public:
 	}
 
 private:
-	Point3 m_Vertex0;
-	Point3 m_Vertex1;
-	Point3 m_Vertex2;
+	Point3 mVertex0;
+	Point3 mVertex1;
+	Point3 mVertex2;
 	shared_ptr<Material> mCurrMaterial;
 };
 
