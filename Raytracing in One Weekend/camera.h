@@ -96,7 +96,7 @@ private:
 
 		//Calculate location of upper left pixel.
 		auto viewport_upper_left = mCenter - Vec3(0, 0, focal_length) - viewport_u / 2 - viewport_v / 2;
-		m_Pixel00Loc = viewport_upper_left + 0.5 * (mPixelDeltaU + mPixelDeltaV);
+		mPixel00Loc = viewport_upper_left + 0.5 * (mPixelDeltaU + mPixelDeltaV);
 
 	}
 
@@ -105,7 +105,7 @@ private:
 		// point around the pixel location i, j.
 
 		Vec3 offset = sampleSquare();
-		auto pixel_sample = m_Pixel00Loc + ((i + offset.getX()) * mPixelDeltaU) + ((j + offset.getY()) * mPixelDeltaV);
+		auto pixel_sample = mPixel00Loc + ((i + offset.getX()) * mPixelDeltaU) + ((j + offset.getY()) * mPixelDeltaV);
 
 		auto ray_origin = mCenter;
 		auto ray_direction = pixel_sample - ray_origin;
@@ -157,7 +157,7 @@ private:
 
 	int mImageHeight;
 	Point3 mCenter;
-	Point3 m_Pixel00Loc;
+	Point3 mPixel00Loc;
 	Vec3 mPixelDeltaU;
 	Vec3 mPixelDeltaV;
 	double mPixelSamplesScale;		//Color scale factor for a sum of pixel samples
