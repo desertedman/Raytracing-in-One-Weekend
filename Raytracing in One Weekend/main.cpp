@@ -28,11 +28,11 @@ int main() {
 
 
 	Camera cam;
-	cam.m_AspectRatio = 16.0 / 9.0;
-	cam.m_ImageWidth = 400;
-	cam.m_SamplesPerPixel = 100;
-	cam.m_MaxDepth = 50;
-	//cam.m_FileName = "someFileName.ppm"
+	cam.aspectRatio = 16.0 / 9.0;
+	cam.imageWidth = 400;
+	cam.samplesPerPixel = 100;
+	cam.maxDepth = 50;
+	//cam.fileName = "someFileName.ppm"
 
 
 	cam.renderCamera(world);

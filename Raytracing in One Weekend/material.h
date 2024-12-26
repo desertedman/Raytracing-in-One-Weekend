@@ -20,46 +20,46 @@ public:
 class Lambertian : public Material {
 public:
 	Lambertian(const Color& albedo) {
-		m_Albedo = albedo;
+		mAlbedo = albedo;
 	}
 
 	bool isRayScattered(const Ray& curr_ray, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const override {
 
-		auto scatter_direction = record.m_Normal + generateRandUnitVector();
+		auto scatter_direction = record.normal + generateRandUnitVector();
 
 
 		//Catch degenerate scatter direction
 		if (scatter_direction.isNearZero()) {
-			scatter_direction = record.m_Normal;
+			scatter_direction = record.normal;
 		}
 
 
-		scatteredRay = Ray(record.m_CurrPoint, scatter_direction);
-		attenuation = m_Albedo;
+		scatteredRay = Ray(record.currPoint, scatter_direction);
+		attenuation = mAlbedo;
 		return true;
 	}
 
 private:
-	Color m_Albedo;
+	Color mAlbedo;
 };
 
 
 class Metal : public Material {
 public:
 	Metal(const Color& albedo) {
-		m_Albedo = albedo;
+		mAlbedo = albedo;
 	}
 
 	bool isRayScattered(const Ray& curr_ray, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const override {
 
-		Vec3 reflected_ray = reflectVector(curr_ray.getDirection(), record.m_Normal);
+		Vec3 reflected_ray = reflectVector(curr_ray.getDirection(), record.normal);
 
-		scatteredRay = Ray(record.m_CurrPoint, reflected_ray);
-		attenuation = m_Albedo;
+		scatteredRay = Ray(record.currPoint, reflected_ray);
+		attenuation = mAlbedo;
 		return true;
 	}
 
 private:
-	Color m_Albedo;
+	Color mAlbedo;
 };
 #endif

@@ -19,25 +19,25 @@ public:
 
 		if (getDotProduct(curr_ray.getDirection(), outward_normal) > 0.0) {
 			//ray is inside the sphere
-			(*this).m_Normal = -outward_normal;
-			(*this).m_FrontFace = false;
+			(*this).normal = -outward_normal;
+			(*this).frontFace = false;
 		}
 
 		else {
 			//ray is outside the sphere
-			(*this).m_Normal = outward_normal;
-			(*this).m_FrontFace = true;
+			(*this).normal = outward_normal;
+			(*this).frontFace = true;
 		}
 	}
 
 
 public:
 	//member list
-	Point3 m_CurrPoint;
-	Vec3 m_Normal;
-	double m_ParameterT = 0;
-	bool m_FrontFace = false;
-	shared_ptr<Material> m_CurrMaterial;
+	Point3 currPoint;
+	Vec3 normal;
+	double parameterT = 0;
+	bool frontFace = false;
+	shared_ptr<Material> currMaterial;
 
 };
 

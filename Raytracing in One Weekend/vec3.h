@@ -6,27 +6,27 @@
 class Vec3 {
 public:
 	Vec3() {
-		m_XYZ[0] = 0;
-		m_XYZ[1] = 0;
-		m_XYZ[2] = 0;
+		mXYZ[0] = 0;
+		mXYZ[1] = 0;
+		mXYZ[2] = 0;
 	}
 
 	Vec3(double x, double y, double z) {
-		m_XYZ[0] = x;
-		m_XYZ[1] = y;
-		m_XYZ[2] = z;
+		mXYZ[0] = x;
+		mXYZ[1] = y;
+		mXYZ[2] = z;
 	}
 
 	double getX() const {
-		return m_XYZ[0];
+		return mXYZ[0];
 	}
 
 	double getY() const {
-		return m_XYZ[1];
+		return mXYZ[1];
 	}
 
 	double getZ() const {
-		return m_XYZ[2];
+		return mXYZ[2];
 	}
 
 	Vec3 operator-() const {
@@ -34,24 +34,24 @@ public:
 	}
 
 	double operator[](int i) const {
-		return m_XYZ[i];
+		return mXYZ[i];
 	}
 
 	double& operator[](int i) {
-		return m_XYZ[i];
+		return mXYZ[i];
 	}
 
 	Vec3& operator+=(const Vec3& rhs) {
-		m_XYZ[0] += rhs.getX();
-		m_XYZ[1] += rhs.getY();
-		m_XYZ[2] += rhs.getZ();
+		mXYZ[0] += rhs.getX();
+		mXYZ[1] += rhs.getY();
+		mXYZ[2] += rhs.getZ();
 		return (*this);
 	}
 
 	Vec3& operator*=(double t) {
-		m_XYZ[0] *= t;
-		m_XYZ[1] *= t;
-		m_XYZ[2] *= t;
+		mXYZ[0] *= t;
+		mXYZ[1] *= t;
+		mXYZ[2] *= t;
 		return (*this);
 	}
 
@@ -73,7 +73,7 @@ public:
 		auto s = 1e-8;
 
 		//std::fabs returns absolute value of its input.
-		return (std::fabs(m_XYZ[0]) < s) && (std::fabs(m_XYZ[1]) < s) && (std::fabs(m_XYZ[2]) < s);
+		return (std::fabs(mXYZ[0]) < s) && (std::fabs(mXYZ[1]) < s) && (std::fabs(mXYZ[2]) < s);
 	}
 
 	static Vec3 getRandomVector() {
@@ -85,7 +85,7 @@ public:
 	}
 
 private:
-	double m_XYZ[3];
+	double mXYZ[3];
 };
 
 

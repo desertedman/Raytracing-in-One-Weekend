@@ -10,7 +10,7 @@ public:
 		m_Vertex0 = input_A;
 		m_Vertex1 = input_B;
 		m_Vertex2 = input_C;
-		m_CurrMaterial = material;
+		mCurrMaterial = material;
 	}
 
 	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
@@ -24,7 +24,7 @@ public:
 
 
 
-		record.m_CurrMaterial = (*this).m_CurrMaterial;
+		record.currMaterial = (*this).mCurrMaterial;
 
 		return false;
 	}
@@ -33,7 +33,7 @@ private:
 	Point3 m_Vertex0;
 	Point3 m_Vertex1;
 	Point3 m_Vertex2;
-	shared_ptr<Material> m_CurrMaterial;
+	shared_ptr<Material> mCurrMaterial;
 };
 
 #endif

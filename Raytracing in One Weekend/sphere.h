@@ -7,16 +7,16 @@
 class Sphere : public Hittable {
 public :
 	Sphere(const Point3& center, double radius, shared_ptr<Material> material) {
-		m_Center = center;
-		m_Radius = fmax(0, radius);
-		m_CurrMaterial = material;
+		mCenter = center;
+		mRadius = fmax(0, radius);
+		mCurrMaterial = material;
 	}
 
 	bool isObjectHit(const Ray& curr_ray, Interval ray_t, HitRecord& record) const override {
-		Vec3 raycast = m_Center - curr_ray.getOrigin();
+		Vec3 raycast = mCenter - curr_ray.getOrigin();
 		double a = curr_ray.getDirection().getLengthSquared();
 		double h = getDotProduct(curr_ray.getDirection(), raycast);
-		double c = raycast.getLengthSquared() - m_Radius * m_Radius;
+		double c = raycast.getLengthSquared() - mRadius * mRadius;
 
 		double discriminant = h * h - a * c;
 		if (discriminant < 0) {
@@ -46,25 +46,25 @@ public :
 		//Record where exactly we hit
 		//P(t) = O + tD
 		//Use parameter t to calculate final position of sphere intersection
-		record.m_ParameterT = root_t;
-		record.m_CurrPoint = curr_ray.getPosition(record.m_ParameterT);
+		record.parameterT = root_t;
+		record.currPoint = curr_ray.getPosition(record.parameterT);
 
 
 		//Normal vector = unit vector of (Point of intersection - center of sphere)
-		Vec3 outward_normal = (record.m_CurrPoint - m_Center) / m_Radius;
+		Vec3 outward_normal = (record.currPoint - mCenter) / mRadius;
 		record.setFaceNormal(curr_ray, outward_normal);
 
 
-		record.m_CurrMaterial = (*this).m_CurrMaterial;
+		record.currMaterial = (*this).mCurrMaterial;
 
 		return true;
 	}
 
 
 private:
-	Point3 m_Center;
-	double m_Radius;
-	shared_ptr<Material> m_CurrMaterial;
+	Point3 mCenter;
+	double mRadius;
+	shared_ptr<Material> mCurrMaterial;
 };
 
 #endif

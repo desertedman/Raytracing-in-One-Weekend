@@ -31,7 +31,7 @@ public:
 		for (const auto& curr_obj : m_Objects) {
 			if ((*curr_obj).isObjectHit(curr_ray, Interval(ray_t.getMin(), closest_intersection_so_far), temp_record)) {
 				hit_anything = true;
-				closest_intersection_so_far = temp_record.m_ParameterT;
+				closest_intersection_so_far = temp_record.parameterT;
 				record = temp_record;
 			}
 		}
