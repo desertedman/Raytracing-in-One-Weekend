@@ -20,13 +20,13 @@ public:
 		if (getDotProduct(currRay.getDirection(), outwardNormal) > 0.0) {
 			//ray is inside the sphere
 			(*this).normal = -outwardNormal;
-			(*this).frontFace = false;
+			(*this).isFrontFace = false;
 		}
 
 		else {
 			//ray is outside the sphere
 			(*this).normal = outwardNormal;
-			(*this).frontFace = true;
+			(*this).isFrontFace = true;
 		}
 	}
 
@@ -35,8 +35,8 @@ public:
 	//member list
 	Point3 currPoint;
 	Vec3 normal;
-	double parameterT = 0;
-	bool frontFace = false;
+	double parameterT;
+	bool isFrontFace;
 	shared_ptr<Material> currMaterial;
 
 };
@@ -46,7 +46,7 @@ public:
 	virtual ~Hittable() = default;
 
 
-	virtual bool isObjectHit(const Ray& currRay, Interval rayT, HitRecord& record) const = 0;
+	virtual bool isObjectHit(const Ray& incomingRay, Interval rayT, HitRecord& record) const = 0;
 };
 
 #endif

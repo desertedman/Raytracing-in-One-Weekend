@@ -11,7 +11,7 @@ public:
 
 	virtual ~Material() = default;
 
-	virtual bool isRayScattered(const Ray& currRay, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const {
+	virtual bool isRayScattered(const Ray& incomingRay, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const {
 		return false;
 	}
 };
@@ -23,8 +23,9 @@ public:
 		mAlbedo = albedo;
 	}
 
-	bool isRayScattered(const Ray& currRay, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const override {
+	bool isRayScattered(const Ray& incomingRay, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const override {
 
+		// Lambertian diffuse model
 		auto scatterDirection = record.normal + generateRandUnitVector();
 
 
@@ -55,9 +56,9 @@ public:
 			mFuzz = 1;
 	}
 
-	bool isRayScattered(const Ray& currRay, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const override {
+	bool isRayScattered(const Ray& incomingRay, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const override {
 
-		Vec3 reflectedRay = reflectVector(currRay.getDirection(), record.normal);
+		Vec3 reflectedRay = reflectVector(incomingRay.getDirection(), record.normal);
 		reflectedRay = getUnitVector(reflectedRay) + (mFuzz * generateRandUnitVector());
 
 		scatteredRay = Ray(record.currPoint, reflectedRay);
@@ -68,5 +69,34 @@ public:
 private:
 	Color mAlbedo;
 	double mFuzz;
+};
+
+class Dielectric : public Material {
+public:
+	Dielectric(double refractionIndex) {
+		mRefractionIndex = refractionIndex;
+	}
+
+	bool isRayScattered(const Ray& incomingRay, const HitRecord& record, Color& attenuation, Ray& scatteredRay) const override {
+		attenuation = Color(1.0, 1.0, 1.0);
+		double refractionIndex;
+
+		if (record.isFrontFace)
+			refractionIndex = 1.0 / (*this).mRefractionIndex;
+
+		else
+			refractionIndex = (*this).mRefractionIndex;
+
+		Vec3 unitDirection = getUnitVector(incomingRay.getDirection());
+		Vec3 refractedRay = refractVector(unitDirection, record.normal, refractionIndex);
+
+		scatteredRay = Ray(record.currPoint, refractedRay);
+		return true;
+	}
+
+private:
+	// Refractive index in vacuum or air, or the ratio of the material's refractive index over
+	// the refractive index of the enclosing media
+	double mRefractionIndex;
 };
 #endif

@@ -12,10 +12,10 @@ public :
 		mCurrMaterial = material;
 	}
 
-	bool isObjectHit(const Ray& currRay, Interval rayT, HitRecord& record) const override {
-		Vec3 raycast = mCenter - currRay.getOrigin();
-		double a = currRay.getDirection().getLengthSquared();
-		double h = getDotProduct(currRay.getDirection(), raycast);
+	bool isObjectHit(const Ray& incomingRay, Interval rayT, HitRecord& record) const override {
+		Vec3 raycast = mCenter - incomingRay.getOrigin();
+		double a = incomingRay.getDirection().getLengthSquared();
+		double h = getDotProduct(incomingRay.getDirection(), raycast);
 		double c = raycast.getLengthSquared() - mRadius * mRadius;
 
 		double discriminant = h * h - a * c;
@@ -47,12 +47,12 @@ public :
 		//P(t) = O + tD
 		//Use parameter t to calculate final position of sphere intersection
 		record.parameterT = rootT;
-		record.currPoint = currRay.getPosition(record.parameterT);
+		record.currPoint = incomingRay.getPosition(record.parameterT);
 
 
 		//Normal vector = unit vector of (Point of intersection - center of sphere)
 		Vec3 outwardNormal = (record.currPoint - mCenter) / mRadius;
-		record.setFaceNormal(currRay, outwardNormal);
+		record.setFaceNormal(incomingRay, outwardNormal);
 
 
 		record.currMaterial = (*this).mCurrMaterial;
