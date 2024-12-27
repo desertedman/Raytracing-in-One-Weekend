@@ -88,9 +88,19 @@ public:
 			refractionIndex = (*this).mRefractionIndex;
 
 		Vec3 unitDirection = getUnitVector(incomingRay.getDirection());
-		Vec3 refractedRay = refractVector(unitDirection, record.normal, refractionIndex);
+		double cosTheta = std::fmin(getDotProduct(-unitDirection, record.normal), 1.0);
+		double sinTheta = std::sqrt(1.0 - cosTheta * cosTheta);
 
-		scatteredRay = Ray(record.currPoint, refractedRay);
+		bool cannotRefract = refractionIndex * sinTheta > 1;
+		Vec3 direction;
+
+		if (cannotRefract)
+			direction = reflectVector(unitDirection, record.normal);
+
+		else
+			direction = refractVector(unitDirection, record.normal, refractionIndex);
+
+		scatteredRay = Ray(record.currPoint, direction);
 		return true;
 	}
 
