@@ -138,6 +138,14 @@ inline Vec3 getUnitVector(const Vec3& vector) {
 	return vector / vector.getLength();
 }
 
+inline Vec3 getRandomVecInUnitDisk() {
+	while (true) {
+		auto randVec = Vec3(getRandomDouble(-1, 1), getRandomDouble(-1, 1), 0);
+		if (randVec.getLengthSquared() < 1)
+			return randVec;
+	}
+}
+
 // Generate a random vector within the unit sphere.
 inline Vec3 generateRandUnitVector() {
 	while (true) {

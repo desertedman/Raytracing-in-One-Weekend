@@ -35,8 +35,8 @@ public:
 	//member list
 	Point3 currPoint;
 	Vec3 normal;
-	double parameterT;
-	bool isFrontFace;
+	double parameterT = 0;
+	bool isFrontFace = false;
 	shared_ptr<Material> currMaterial;
 
 };
