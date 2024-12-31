@@ -168,9 +168,13 @@ inline Vec3 reflectVector(const Vec3& incomingVector, const Vec3& normalVector) 
 }
 
 inline Vec3 refractVector(const Vec3& incomingVector, const Vec3& normalVector, double etaIOverEtaT) {
+	/*auto cosTheta = std::fmin(getDotProduct(-incomingVector, normalVector), 1.0);
+	Vec3 rOutPerp = etaIOverEtaT * (incomingVector + cosTheta * normalVector);*/
+
 	// Why do we take  the minimum of this?
-	auto cosTheta = std::fmin(getDotProduct(-incomingVector, normalVector), 1.0);
-	Vec3 rOutPerp = etaIOverEtaT * (incomingVector + cosTheta * normalVector);
+	auto cosTheta = std::fmin(getDotProduct(incomingVector, normalVector), 1.0);
+	Vec3 rOutPerp = etaIOverEtaT * (incomingVector - cosTheta * normalVector);
+	// Why take absolute value of this?
 	Vec3 rOutParallel = -std::sqrt(std::fabs(1.0 - rOutPerp.getLengthSquared())) * normalVector;
 	return rOutPerp + rOutParallel;
 }

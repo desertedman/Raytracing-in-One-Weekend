@@ -94,7 +94,7 @@ public:
 		bool cannotRefract = refractionIndex * sinTheta > 1;
 		Vec3 direction;
 
-		if (cannotRefract)
+		if (cannotRefract || getReflectance(cosTheta, refractionIndex) > getRandomDouble())
 			direction = reflectVector(unitDirection, record.normal);
 
 		else
@@ -108,5 +108,12 @@ private:
 	// Refractive index in vacuum or air, or the ratio of the material's refractive index over
 	// the refractive index of the enclosing media
 	double mRefractionIndex;
+
+	static double getReflectance(double cosine, double refractionIndex) {
+		// Use Schlick's approximation for reflectance
+		auto r0 = (1 - refractionIndex) / (1 + refractionIndex);
+		r0 = r0 * r0;
+		return r0 + (1 - r0) * std::pow((1 - cosine), 5);
+	}
 };
 #endif
